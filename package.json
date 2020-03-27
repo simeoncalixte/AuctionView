@@ -1,0 +1,38 @@
+{
+  "name": "displayinventory",
+  "private": true,
+  "version": "1.0.0",
+  "description": "View For Ecommerce Site",
+  "main": "index.js",
+  "dependencies": {
+    "@storybook/preset-typescript": "^2.1.0",
+    "next": "^9.3.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@storybook/addon-actions": "^5.3.17",
+    "@storybook/addon-info": "^5.3.17",
+    "@storybook/addon-links": "^5.3.17",
+    "@storybook/addons": "^5.3.17",
+    "@storybook/react": "^5.3.17",
+    "@types/jest": "^25.1.4",
+    "@types/node": "^13.9.3",
+    "babel-loader": "^8.1.0",
+    "jest": "^25.1.0",
+    "react-docgen-typescript-loader": "^3.7.1",
+    "ts-jest": "^25.2.1",
+    "ts-loader": "^6.2.2",
+    "typescript": "^3.8.3"
+  },
+  "author": "Calixte Simeon",
+  "license": "ISC"
+}
