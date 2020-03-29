@@ -5,6 +5,7 @@ const GlobalStyle = createGlobalStyle`
     body {
         margin: 0px;
         padding: 0px;
+        height: 100vh;
         background: red;
     }
 `;
