@@ -1,8 +1,8 @@
-# To get started 
+# 1st To get started run in your terminal
 ```
- 
+  git clone https://github.com/simeoncalixte/AuctionView.git
+  npm install 
 ```
-
 
 # To Run Development 
 ```
