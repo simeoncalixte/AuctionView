@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
   stories: ['../stories/**/*.stories.[tj]s([x])?'],
   addons: ['@storybook/addon-actions', '@storybook/addon-links'],
@@ -11,6 +13,9 @@ module.exports = {
         },
         {
           loader: require.resolve('ts-loader'),
+          options: {
+            configFile: path.join(__dirname, 'tsconfig.json')
+          }
         },
       ],
     });
