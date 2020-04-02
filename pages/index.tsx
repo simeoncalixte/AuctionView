@@ -1,19 +1,7 @@
 import React from "react";
-import styled, {createGlobalStyle} from "styled-components"
+import defaultStyles from "../components/HOC/DefaultPageProps"
 
-const GlobalStyle = createGlobalStyle`
-    body {
-        margin: 0px;
-        padding: 0px;
-        height: 100vh;
-        background: red;
-    }
-`;
-export default () => {
-    return (
-        <>
-        <GlobalStyle/>
-        <div>Home Page</div>
-        </>        
-    )
-}
+const HomePage = (props) =>  <></>;
+
+export default defaultStyles(HomePage);
+;

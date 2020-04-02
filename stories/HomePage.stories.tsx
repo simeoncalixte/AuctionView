@@ -1,11 +1,11 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
 import HomePage from "../pages";
+import PageWrapper from "../components/HOC/DefaultPageProps";
 
-export default {
-  title: 'HomePage',
-  component: HomePage,
-};
+const SampleFunctionalComponent = ( ) => <div></div>;
+const DefaultBackground = PageWrapper(SampleFunctionalComponent);
 
-export const LandingPage = () => <HomePage/>;
 
+export const Background = () => <DefaultBackground/>
+export const HomePageWithInput = () => <HomePage/>

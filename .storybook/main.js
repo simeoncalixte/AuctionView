@@ -1,7 +1,9 @@
 const path = require('path');
 
 module.exports = {
-  stories: ['../stories/**/*.stories.[tj]s([x])?'],
+  stories: [
+    '../stories/**/*.stories.[tj]s([x])?',
+  ],
   addons: ['@storybook/addon-actions', '@storybook/addon-links'],
   webpackFinal: async config => {
     config.module.rules.push({

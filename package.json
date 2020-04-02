@@ -27,6 +27,7 @@
     "@storybook/react": "^5.3.17",
     "@types/jest": "^25.1.4",
     "@types/node": "^13.9.3",
+    "@types/styled-components": "^5.0.1",
     "babel-loader": "^8.1.0",
     "jest": "^25.1.0",
     "react-docgen-typescript-loader": "^3.7.1",
