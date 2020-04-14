@@ -32,17 +32,14 @@ export default  {
     cornFlowerLilac: "#FFADAB",
     tamarillo: "#991A17",
     roseWood: "#590200",
-
     greenApple: "#3B9E42",
     surfCrest: "#D9EADA",
     deYolk: "#8ACE8E",
     bilbao: "#127819",
     cruesoe: "#004605",
-
     turmeric: "#C9C24B",
     apricotWhite: "#FFFEED",
     milan: "#FFFBAB",
     hacienda: "#999317",
     verdunGreen: "#595500"
-
 }

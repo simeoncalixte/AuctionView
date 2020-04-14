@@ -6,8 +6,22 @@
  * a Hex value with an alpha/opacity value;
  */
 export default (hexValue: string, opactiy: number ) : string => {
-   if (!(opactiy >= 0 && opactiy <= 1)) {
-        return hexValue+Math.round(opactiy).toString(16);
+    //check if alpha already exist remove assigned alpha
+    //if so trim to 6 digit without alpha 
+    
+    if (hexValue.length > 6){
+        hexValue = hexValue.slice(0,7);
+    }   
+
+    let alpha = Math.round(opactiy*255).toString(16).toUpperCase();
+    
+    if (alpha.length<2){
+        alpha = `0${alpha}`;
     }
-    return "";
+    
+   if (opactiy >= 0 && opactiy <= 1) {
+        return hexValue+alpha;
+    }else{
+        console.error("invalid opacity provided");
+    }
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import defaultStyles from "../components/HOC/DefaultPageProps";
+import {Wrapper2} from "../components/HOC/DefaultPageProps";
 import DefaultInput from "../components/FormElements/DefaultInput";
 import styled from "styled-components";
 import DefaultButton from "../components/FormElements/DefaultButton";
@@ -12,12 +12,11 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     flex-basis: 100%;
-
 `;
 
 const SearchBar = styled(DefaultInput)`
     max-width: 800px;
-    min-width: 600px;
+    min-width: 60%;
     font-size: 16px;
     padding: 10px;
     padding-left: 20px;
@@ -65,5 +64,5 @@ const HomePage = (props) =>  {
     )
 };
 
-export default defaultStyles(HomePage);
+export default Wrapper2(HomePage);
 ;
