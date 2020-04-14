@@ -11,13 +11,11 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    flex-basis: 100%;
-
 `;
 
 const SearchBar = styled(DefaultInput)`
     max-width: 800px;
-    min-width: 600px;
+    min-width: 60%;
     font-size: 16px;
     padding: 10px;
     padding-left: 20px;
@@ -46,21 +44,7 @@ const HomePage = (props) =>  {
    const background = `linear-gradient(0deg, #051713b8 0%, transparent),linear-gradient(62deg,#29685b 24%,#2a685b 49%, #29685b)`;
    return ( 
         <Container>
-            <Header>Search the Auction</Header>
-            <SearchBar name={"search"}/>
-            <ButtonContainer>
-                <SearchButton   
-                    backgroundColor={background} 
-                    children={"Search Auction"} size={"XL"}
-                    borderColor={colorPallet.burnham}
-                />
-                <SearchButton 
-                    children={"Go To Dashboard"} 
-                    size={"XL"}
-                    backgroundColor={background} 
-                    borderColor={colorPallet.burnham}
-                />
-            </ButtonContainer>
+          
         </Container>
     )
 };
