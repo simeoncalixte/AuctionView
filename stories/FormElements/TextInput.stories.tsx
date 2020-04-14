@@ -10,4 +10,4 @@ export default {
   decarators: [withKnobs]
 }
 
-export const DefaultInputElement = () => <><DefaultInput placeholder={text("placeholder","Placeholder text")}/></>
+export const DefaultInputElement = () => <><DefaultInput name={"defaultInput"} placeholder={text("placeholder","Placeholder text")}/></>
