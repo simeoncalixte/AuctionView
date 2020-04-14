@@ -1,3 +1,4 @@
+import React from "react";
 import Document, {NextScript,Head,Main} from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 
