@@ -1,6 +1,7 @@
 import React from "react";
 import LoginForm from "../Forms/Login"
 import ReactDOM from "react-dom";
+import Login from "../Forms/Login";
 
 export default [
     {
@@ -15,18 +16,13 @@ export default [
     },
     {
         href: "/login",
+        type: "modalButton",
         children: "Login",
-        cb: (e)=>{
-            e.preventDefault();
-            console.log("Login Call Back");
-            console.log(document.querySelector("#modalContainer"))
-            return ReactDOM.createPortal(  <LoginForm/>, document.querySelector("#modalContainer") )
-        
-        }
-
+        modal: Login
     },
     {
         href: "/register",
+        type: "button",
         children: "Register",
         cb: (e)=>{
             if(e){
