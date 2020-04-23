@@ -1,6 +1,7 @@
 import React, {useContext} from "react";
 import styled from "styled-components";
 import Link from "./Links"; 
+import Button, {ButtonWithAddToDOM} from "./Buttons"; 
 import Routes from "./RouteObject";
 import {useRouter} from "next/router";
 
@@ -11,27 +12,25 @@ const NavigationDefaultStyle = styled.nav`
     padding: 15px 5px 0px;
 `;
 
-interface ILinks {
-    routes: ILink[],
-    activeLink: string,
-}
+
 
 export const DefaultLinks = (props: ILinks) => <section>
-        {
-            props.routes.map( (route,index) =>{
-                return(
-                    <Link  
-                        key={index} 
-                        href={route.href} 
-                        isActive={props.activeLink == route.href} 
-                        cb={route.cb}
-                    >
-                        {route.children}
-                    </Link>
-                );
-            })
-        }
-    </section>;
+    {
+        props.routes.map( (route,index) =>{
+            switch (route.type){
+                case "modalButton":
+                    const NewButton = ButtonWithAddToDOM(route.modal)
+                    return <NewButton key={index} {...route} />
+                break;
+                case "link":
+                default:
+                    return <Link key={index} {...route} />
+                break;
+            }
+        })
+    }
+</section>;
+        
 
 const DefaultNavigationBar  =  (props)  => {
     const activeLink = useRouter().pathname;

@@ -46,8 +46,6 @@ const buttonSizeStyle = (size: string) => {
         default: 
             return `
                 font-size: 14px;
-                min-width: 100px;
-                min-height: 25px;
                 padding: 3px 15px;
                 border-radius: 16px;
                 box-shadow: 1px 1px 2px #80808040;

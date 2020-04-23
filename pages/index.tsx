@@ -5,6 +5,7 @@ import styled from "styled-components";
 import DefaultButton from "../components/FormElements/DefaultButton";
 import colorPallet from "../utils/ColorPallet";
 
+
 const Container = styled.div`
     width: 100%;
     display: flex;
