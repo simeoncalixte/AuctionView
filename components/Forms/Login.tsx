@@ -1,8 +1,9 @@
 import React from "react";
 import withModal, {ModalContext}  from "../Modal";
 import styled from "styled-components";
-import {Button,InputText} from "../FormElements"
-
+import {Button,InputText} from "../FormElements";
+import {UserServices} from "../../services"
+import {postData} from "../../utils/NetworkRequest";
 
 
 
@@ -73,20 +74,20 @@ const CloseButton = styled.div`
 
 const LoginForm = (props ) => {
     const modalContext = React.useContext(ModalContext);
-    console.log(modalContext)
 
-    console.log(props)
     const logIn = (e) => {
         e.preventDefault();
         e.stopPropagation();
         const username= (e.target.username.value);
         const password= (e.target.password.value);
+        postData(UserServices+"/login",{username,password})
+            .then((res)=>{
+                if(res.status){
+
+                }
+            })
     }
-
-    const resetPassword = ( ) => {
-
-    }
-
+      
     return (
         <Form 
             onSubmit={logIn} 

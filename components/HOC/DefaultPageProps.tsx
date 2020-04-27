@@ -74,7 +74,7 @@ const Wrapper = (WrappingComponent: FunctionComponent) => (props) => {
       )
     }
 
-  export const Wrapper2 = (WrappingComponent: FunctionComponent) => (props) => {
+export const Wrapper2 = (WrappingComponent: FunctionComponent) => (props) => {
       return (
         <>
             <GlobalStyle2/>
@@ -84,6 +84,7 @@ const Wrapper = (WrappingComponent: FunctionComponent) => (props) => {
         </>
       )
   }
+
 
   export default Wrapper
    

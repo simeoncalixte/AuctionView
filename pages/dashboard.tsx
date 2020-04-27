@@ -3,8 +3,10 @@ import defaultStyles from "../components/HOC/DefaultPageProps";
 import DefaultInput from "../components/FormElements/DefaultInput";
 import styled from "styled-components";
 import DefaultButton from "../components/FormElements/DefaultButton";
-import colorPallet from "../utils/ColorPallet";
-
+import {GetStaticProps} from "next";
+import {Inventory} from "../services";
+import fetch from "node-fetch";
+import {getData} from "../utils/NetworkRequest"
 const Container = styled.div`
     width: 100%;
     display: flex;
@@ -42,6 +44,7 @@ const Header = styled.h1`
 
 const HomePage = (props) =>  {
    const background = `linear-gradient(0deg, #051713b8 0%, transparent),linear-gradient(62deg,#29685b 24%,#2a685b 49%, #29685b)`;
+   console.log(props)
    return ( 
         <Container>
           
@@ -49,5 +52,20 @@ const HomePage = (props) =>  {
     )
 };
 
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+    try {
+      let InventoryList
+      await getData(Inventory+"/Inventory",{})
+        .then(res => InventoryList = res)
+        .catch(err=> console.error(err))
+
+      // By returning { props: item }, the StaticPropsDetail component
+      // will receive `item` as a prop at build time
+      return { props: { InventoryList } }
+    } catch (err) {
+      return { props: { errors: err.message } }
+    }
+}
+
 export default defaultStyles(HomePage);
-;
+
