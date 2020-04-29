@@ -31,6 +31,7 @@ const GlobalStyle = createGlobalStyle`
         ;
         display: flex;
        flex-direction: column;
+       overflow-y: scroll;
     }
 `;
 
@@ -52,15 +53,16 @@ const GlobalStyle2 = createGlobalStyle`
     }
 
     #__next {
-        margin: 0px;
-        padding: 0px;
-        height: 100vh;
-        width: 100%;
-        background: 
-          linear-gradient(0deg,#D5D5D5D9 60%,#6f6f6f ), url(images/image.png)
-        ;
-        display: flex;
-       flex-direction: column;
+      margin: 0px;
+      padding: 0px;
+      height: 100vh;
+      width: 100%;
+      background: 
+        linear-gradient(0deg,#D5D5D5D9 60%,#6f6f6f ), url(images/image.png)
+      ;
+      display: flex;
+      flex-direction: column;
+      overflow-y: scroll;
     }
 `;
 
@@ -74,7 +76,7 @@ const Wrapper = (WrappingComponent: FunctionComponent) => (props) => {
       )
     }
 
-export const Wrapper2 = (WrappingComponent: FunctionComponent) => (props) => {
+  export const Wrapper2 = (WrappingComponent: FunctionComponent) => (props) => {
       return (
         <>
             <GlobalStyle2/>
@@ -84,7 +86,6 @@ export const Wrapper2 = (WrappingComponent: FunctionComponent) => (props) => {
         </>
       )
   }
-
 
   export default Wrapper
    
