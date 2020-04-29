@@ -5,9 +5,12 @@
   "description": "View For Ecommerce Site",
   "main": "index.js",
   "dependencies": {
+    "@types/node-fetch": "^2.5.7",
     "@types/react-dom": "^16.9.6",
+    "axios": "^0.19.2",
     "babel-plugin-styled-components": "^1.10.7",
     "next": "^9.3.2",
+    "node-fetch": "^2.6.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "styled-components": "^5.0.1"
