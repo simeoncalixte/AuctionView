@@ -5,6 +5,7 @@
   "description": "View For Ecommerce Site",
   "main": "index.js",
   "dependencies": {
+    "@brainhubeu/react-carousel": "^1.13.41",
     "@types/node-fetch": "^2.5.7",
     "@types/react-dom": "^16.9.6",
     "axios": "^0.19.2",
@@ -37,7 +38,7 @@
     "babel-loader": "^8.1.0",
     "jest": "^25.1.0",
     "react-docgen-typescript-loader": "^3.7.1",
-    "ts-jest": "^25.2.1",
+    "ts-jest": "^25.4.0",
     "ts-loader": "^6.2.2",
     "typescript": "^3.8.3"
   },

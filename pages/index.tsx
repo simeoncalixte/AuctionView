@@ -44,7 +44,6 @@ const Header = styled.h1`
 
 const HomePage = (props) =>  {
    const background = `linear-gradient(0deg, #051713b8 0%, transparent),linear-gradient(62deg,#29685b 24%,#2a685b 49%, #29685b)`;
-   console.log(props);
    return ( 
         <Container>
             <Header>Search the Auction</Header>

@@ -1,6 +1,5 @@
 import fetch from "node-fetch"
 import axios from "axios"
-
 export  async function postData(url = '', data = {}) {
     const response = await fetch(url, {
       method: 'POST',
@@ -15,7 +14,8 @@ export  async function postData(url = '', data = {}) {
 export async function getData(url = '', params = {}) {
     const response = await axios.get(url, {
       headers: {
-        'Content-Type': 'application/json'
+        'content-type': 'application/json',
+        'Access-Control-Allow-Origin':"*"      
       },
       params
     });

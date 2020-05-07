@@ -2,7 +2,7 @@ import React from "react";
 import withModal, {ModalContext}  from "../Modal";
 import styled from "styled-components";
 import {Button,InputText} from "../FormElements";
-import {UserServices} from "../../services"
+import {UserServices} from "../../services/mock";
 import {postData} from "../../utils/NetworkRequest";
 
 
