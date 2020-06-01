@@ -25,17 +25,14 @@ const CardHeading = styled.span`
     padding: 3px 5px;
 `;
 
-
-
-
 export default  (item) => {
     const [imageLoaded,setLoadedState] =  React.useState(false);
     const [images,setImages] =  React. useState(null);
     const DisplayImage = imageLoaded ? 
         <Carousel>
             {
-                images.standard.map((imageSrc)=>{
-                    return <Image src={imageSrc} />
+                images.standard.map((imageSrc,key)=>{
+                    return <Image key={key} src={imageSrc} />
 
                 })
             }
@@ -43,6 +40,7 @@ export default  (item) => {
         <Image blur={true} src={`//${item["Image Thumbnail"]}`}/>
     
     React.useEffect(()=>{
+        /** 
         if(!imageLoaded){
             if (item["Image URL"]){
                 getData("//"+Inventory.images, {url: item["Image URL"]})
@@ -74,6 +72,7 @@ export default  (item) => {
                     }).catch(e => console.error(e))
             }            
         }
+        */
     })
 
     return (

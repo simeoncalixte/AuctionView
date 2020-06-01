@@ -3,16 +3,20 @@ import styled from "styled-components";
 
 const FlexItem = styled.div`
     /** they assign a height on the element which means you might have to manage height here */
-    margin-right: 10px; 
     background: #8C8; 
     flex: 0 0 100%;
+    scroll-snap-align: start;
+    transition: all 1s 
     `;
 
-const PresentationDiv = styled.div<{position?: number}>`
+const PresentationDiv = styled.div`
     display: flex;
     flex-direction: row;
-    right: ${ props =>  props.position? props.position :  0 }% ;
     transition: all 0.5s ease;
+    position: relative;
+    overflow-x: auto;
+    scroll-snap-type: block;
+    ::-webkit-scrollbar {    display: none;}    
     & * {
         flex: 0 0 100%;
     }
@@ -36,20 +40,13 @@ const Controls = styled.span`
 
 
 export default (props: ICarousel) => {
-    const viewPadding = 2;
     const RotatingView = React.useRef<HTMLDivElement>();
     const [range,setRange] = React.useState({start: 0, end: 3});
     let [index,setIndex] = React.useState(0);
-    let imageCollection = props.children.slice(range.start+1,range.end+1);
-    let nextSlideExist = imageCollection[index+1];
-    let previousSlideExist = !!imageCollection[index-1];
+    let [statedChildren,setStatedChildren] = React.useState(props.children);
     
     const rotateCarousel = (incrementBy: number) => {
-        console.log(index+incrementBy);
-        console.log({module : (index + incrementBy) % props.children.length , index, childrenLength: props.children.length })
-        if( index + incrementBy > props.children.length){
-        }else if(index + incrementBy < 0){
-        }
+        const Element =  RotatingView.current;
         setIndex(index + incrementBy % props.children.length)    
     }
 
@@ -59,10 +56,13 @@ export default (props: ICarousel) => {
             <span onClick={(e) => rotateCarousel(1)}> Next</span>
         </Controls>
     )
-
+   console.log({statedChildren})
     return (
         <>
-            <PresentationDiv ref={RotatingView}>
+            <PresentationDiv ref={RotatingView} 
+            onScroll={(e)=>{
+                console.log(e.target)
+            }}>
                 {
                     props.children.slice(range.start,range.end)
                         .map((item => {

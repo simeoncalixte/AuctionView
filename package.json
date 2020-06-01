@@ -5,9 +5,6 @@
   "description": "View For Ecommerce Site",
   "main": "index.js",
   "dependencies": {
-    "@brainhubeu/react-carousel": "^1.13.41",
-    "@types/node-fetch": "^2.5.7",
-    "@types/react-dom": "^16.9.6",
     "axios": "^0.19.2",
     "babel-plugin-styled-components": "^1.10.7",
     "next": "^9.3.2",
@@ -34,6 +31,8 @@
     "@storybook/react": "^5.3.17",
     "@types/jest": "^25.1.4",
     "@types/node": "^13.9.3",
+    "@types/node-fetch": "^2.5.7",
+    "@types/react-dom": "^16.9.6",
     "@types/styled-components": "^5.0.1",
     "babel-loader": "^8.1.0",
     "jest": "^25.1.0",
