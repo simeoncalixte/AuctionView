@@ -23,15 +23,11 @@ const SearchBar = styled(DefaultInput)`
     padding-left: 20px;
     text-align: center;
     font-weight: 400;
-    
 `;
 
 const SearchButton = styled(DefaultButton)`
    display: inline-block; 
-
-   
 `;
-
 
 const ButtonContainer = styled.section`
     margin: 20px 0px;

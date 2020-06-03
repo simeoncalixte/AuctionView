@@ -2,8 +2,8 @@ import React from "react"
 import styled from "styled-components";
 import {FilterContext} from "../../pages/dashboard";
 import withScrollBar from "../HOC/CustomScroll";
-import SVG from "../../public/images/checkMark.svg"
-
+import SVG from "../SVG/checkMark";
+import FilterDropDown from "./filterDropDown";
 
 interface IProps {
 
@@ -65,12 +65,21 @@ const FilterTitle = styled.h5`
 const FilterValueTitle = styled.h6`
     font-size: 18px;
     margin: 0px 5px;
+    background: linear-gradient(180deg,#0b493c6e,#8fa19d,#0b493c64);
+    color: white;
+    text-shadow: 1px 1px 1px #0006;
+    margin: 0px;
+    padding: 0px 5px;
 `;
 
 interface IFilterAttributes {
     _id: string;
     ["Model Groups"]: string[];
 }
+
+const FilterDropDownChild = styled.li`
+    
+`;
 
 export default (props: IProps) => {
     const {selectedFilters,setFilters} = React.useContext(FilterContext);
@@ -117,7 +126,7 @@ export default (props: IProps) => {
                     <ul>
                         {              
                             ModelGroups.map((Model)=>{
-                                return <li>{Model}</li>
+                                return <FilterDropDownChild>{Model}</FilterDropDownChild>
                             })
                         }
                     </ul>
@@ -130,12 +139,9 @@ export default (props: IProps) => {
 
     return (
         <FilterWrapper>
-            <FilterContainer>
-                <FilterTitle>Makes</FilterTitle>
-                <FilterValueContainerWithScroll>
-                    {Makes}
-                </FilterValueContainerWithScroll>
-            </FilterContainer>
+            <FilterDropDown title={"Makes"}>
+                {Makes}
+            </FilterDropDown>
             <FilterContainer>
                 <FilterTitle>Model Group</FilterTitle>
                 <FilterValueContainerWithScroll>

@@ -6,9 +6,10 @@ import Numbers from "../../utils/Numbers";
 const Track = styled.div`
     display: block;
     width: 10px;
+    position: relative;
     height: auto;
     background-color: #f1ebeb1a;
-    right: 2px;
+    right: 1px;
     flex-basis: 10px;
 `;
 
