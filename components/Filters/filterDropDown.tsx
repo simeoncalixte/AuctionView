@@ -1,12 +1,22 @@
 import React from "react";
 import styled from "styled-components";
 import withScrollBar from "../HOC/CustomScroll";
+import OpenAndCloseCross from "../SVG/openCloseCross";
 
-const FilterValueContainer = styled.ul`
+const FilterValueContainer = styled.ul <{isOpen: boolean;}>`
+    height: 0px;
+    max-height: 250px;
+    transition: height 1s linear;
     flex-basis: 100%;
     list-style: none;
     padding: 0px;
     margin: 0px;
+    ${props => props.isOpen?  
+        `
+            height: 250px;
+        `: 
+        ``
+    }
 `;
 
 const FilterLi = styled.li`
@@ -34,6 +44,8 @@ const FilterTitle = styled.h5`
     color: #e7eaea;
     font-weight: 500;
     border-top: 2px solid #00000066;
+    display: flex;
+    justify-content: space-between;
 `;
 const FilterValueTitle = styled.h6`
     font-size: 18px;
@@ -43,15 +55,24 @@ const FilterValueTitle = styled.h6`
 interface IDropDown {
     title: string;
     children: JSX.Element | JSX.Element[];
+    dropDownIconWidth: string;
 }
 
 const DropDown  = (props: IDropDown) => {
     const [isOpen, setOpen ] = React.useState(false);
-
+    
+    const toggleDropDown = ( ) => {
+        setOpen(!isOpen)
+    }
     return(
         <FilterContainer>
-            <FilterTitle>{props.title}</FilterTitle>
-            <FilterValueContainerWithScroll>
+            <FilterTitle onClick={toggleDropDown}> 
+                <span>{props.title}</span>
+                <span>
+                    <OpenAndCloseCross isOpen={isOpen} width={props.dropDownIconWidth}/>
+                </span>
+            </FilterTitle>
+            <FilterValueContainerWithScroll isOpen={isOpen}>
                 {props.children}
             </FilterValueContainerWithScroll>
         </FilterContainer>

@@ -1,38 +1,62 @@
-import CheckMark from "../../public/images/checkMark.svg"
 import styled, {keyframes} from "styled-components";
+import React from "react";
 
 const mark = keyframes`
-  from {
-    stroke-dashoffset: 0;
-  }
   to {
-    stroke-dashoffset: 1000;
+    stroke-dashoffset: 0;
+    stroke: red;
   }
 `;
 
-const AnimatedCheckMark = styled.div`
-    svg .checkMark {
-        stroke-dasharray: 1000;     
-        animation: mark 60s ease infinite;
+const AnimatedCheckMark = styled.div<{isChecked: boolean, width:string}>`
+    width: ${props => props.width};
+   .st0{
+     fill: transparent;
+     stroke-miterlimit:10;
+     }
+    svg box {
+      stroke-width:4px;
+      stroke-dasharray: 253;     
     }
-`;
+    svg .checkMark  {
+      transition: stroke-dashoffset .5s linear;
+    }
+    svg .checkMark  {
+      stroke-dashoffset: 30;
+      stroke-dasharray: 30;
+    }
+    ${props => props.isChecked ? `
+      svg .checkMark  {
+        stroke-dashoffset: 0;
+      }
+    `: ``}
+ 
 
-const AnimatableCheckMark = ( ) => {
+`;
+interface IAnimatableCheckMark {
+  isChecked: boolean;
+  width: string;
+}
+
+const AnimatableCheckMark = (props: IAnimatableCheckMark ) => {
+  const [isChecked, setIsChecked] = React.useState(props.isChecked);
+
 
     return (
-        <AnimatedCheckMark>
-            <svg viewBox="0 0 24 24" width="24px" height="24px">
-                <path 
-                    id="TheFuck"
-                    className="checkMark"
-                    stroke="4"
-                    stroke-width="#0000"
-                    d="M484.128,104.478l-16.116-16.116c-5.064-5.068-11.816-7.856-19.024-7.856c-7.208,0-13.964,2.788-19.028,7.856
-                    L203.508,314.81L62.024,173.322c-5.064-5.06-11.82-7.852-19.028-7.852c-7.204,0-13.956,2.792-19.024,7.852l-16.12,16.112
-                    C2.784,194.51,0,201.27,0,208.47c0,7.204,2.784,13.96,7.852,19.028l159.744,159.736c0.212,0.3,0.436,0.58,0.696,0.836
-                    l16.12,15.852c5.064,5.048,11.82,7.572,19.084,7.572h0.084c7.212,0,13.968-2.524,19.024-7.572l16.124-15.992
-                    c0.26-0.256,0.48-0.468,0.612-0.684l244.784-244.76C494.624,132.01,494.624,114.966,484.128,104.478z"                />
-            </svg>        
+        <AnimatedCheckMark 
+          isChecked={isChecked}
+          onClick={()=>setIsChecked(!isChecked)} 
+          width={props.width}
+          >
+            <svg version="1.1" x="0px" y="0px" viewBox="0 0 24 24">
+              <g id="Layer_1">
+                <path className="st0" d="M1.5,1.5"/>
+                <rect className="box st0 " x="0.5" y="0.5" stroke="#000000"  width="23" height="23"/>
+              </g>
+              <g id="Layer_2">
+                <polyline className="st0 checkMark" stroke="#000000" points="2.5,11.5 8.5,17.5 21,5 	"/>
+              </g>
+          </svg>
         </AnimatedCheckMark>
     )
 }

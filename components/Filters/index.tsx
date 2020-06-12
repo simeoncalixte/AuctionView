@@ -2,23 +2,22 @@ import React from "react"
 import styled from "styled-components";
 import {FilterContext} from "../../pages/dashboard";
 import withScrollBar from "../HOC/CustomScroll";
-import SVG from "../SVG/checkMark";
+import CheckMark from "../SVG/checkMark";
 import FilterDropDown from "./filterDropDown";
+import FilterListItem from "./FilterListItem";
 
 interface IProps {
 
     [key:string] : any[]
 }
 
-const CheckBox = styled.div`
+const CheckBoxContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 2px #878787;
     border-radius: 3px;
-    width: 20px;
-    height: 20px;
-    border-style: ridge;
+    width: 24px;
+    height: 24px;
     cursor: pointer;
 `;
 
@@ -103,13 +102,12 @@ export default (props: IProps) => {
 
     const Makes = props.Makes.map((make)=>{
         const key = "Make";
-        const checked = selectedFilters[key] &&  selectedFilters[key][make._id] ? <SVG/> : ""
-        return <FilterLi 
-                    onClick={ (e) => updateContext(key,make) }
-                >
-                    <span>{make._id}</span>
-                    <CheckBox>{checked}</CheckBox>
-                </FilterLi>
+        const checked = selectedFilters[key] &&  selectedFilters[key][make._id];
+        return <FilterListItem
+                    onClickCallBack={()=> updateContext(key,make)}
+                    title={make._id}
+                    isChecked={checked}
+                />
     })
 
     const ModelGroupIsActive = selectedFilters && selectedFilters.Make &&  Object.keys(selectedFilters.Make).length;
@@ -123,13 +121,19 @@ export default (props: IProps) => {
                     <FilterValueTitle>
                         {vendor}
                     </FilterValueTitle>
-                    <ul>
+                    <FilterValueContainer>
                         {              
                             ModelGroups.map((Model)=>{
-                                return <FilterDropDownChild>{Model}</FilterDropDownChild>
+                                return(
+                                    <FilterListItem
+                                        onClickCallBack={()=>null}
+                                        title={Model}
+                                        isChecked={false}
+                                    />
+                                )
                             })
                         }
-                    </ul>
+                    </FilterValueContainer>
                 </li>
             )
         }
@@ -139,15 +143,18 @@ export default (props: IProps) => {
 
     return (
         <FilterWrapper>
-            <FilterDropDown title={"Makes"}>
+            <FilterDropDown 
+                title={"Makes"}
+                dropDownIconWidth={"24px"}
+            >
                 {Makes}
             </FilterDropDown>
-            <FilterContainer>
-                <FilterTitle>Model Group</FilterTitle>
-                <FilterValueContainerWithScroll>
-                    {ModelGroupIsActive && ModelGroupContainer}
-                </FilterValueContainerWithScroll>
-            </FilterContainer>
+            <FilterDropDown 
+                title={"Model Group"}
+                dropDownIconWidth={"24px"}
+            >
+                {ModelGroupIsActive && ModelGroupContainer}
+            </FilterDropDown>
         </FilterWrapper>
         )
 } 
