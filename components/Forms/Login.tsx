@@ -2,7 +2,6 @@ import React from "react";
 import withModal, {ModalContext}  from "../Modal";
 import styled from "styled-components";
 import {Button,InputText} from "../FormElements";
-import {UserServices} from "../../services"
 import {postData} from "../../utils/NetworkRequest";
 
 

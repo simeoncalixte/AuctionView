@@ -1,19 +1,20 @@
 import React, {ReactNode, FunctionComponent} from "react";
 import defaultStyles from "../components/HOC/DefaultPageProps";
 import DefaultInput from "../components/FormElements/DefaultInput";
+import Card from "../components/InventoryUI/Cards";
 import styled from "styled-components";
 import DefaultButton from "../components/FormElements/DefaultButton";
-import {GetStaticProps} from "next";
-import {Inventory} from "../services";
-import fetch from "node-fetch";
+import {GetServerSideProps,GetStaticProps} from "next";
+import Pagination from "../components/Paginator";
+import Filter from "../components/Filters";
+import {DevelopmentServer as Inventory} from "../services/Inventory";
 import {getData} from "../utils/NetworkRequest"
+
 
 const Container = styled.div`
     width: 100%;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    flex-direction: row;
 `;
 
 const SearchBar = styled(DefaultInput)`
@@ -24,7 +25,6 @@ const SearchBar = styled(DefaultInput)`
     padding-left: 20px;
     text-align: center;
     font-weight: 400;
-    
 `;
 
 const SearchButton = styled(DefaultButton)`
@@ -40,63 +40,79 @@ const Header = styled.h1`
 `;
 
 
-const InventoryItem = styled.div`
-    margin: 10px;
-    background-color: #ffffffd6;
-    min-width: 250px;
-    border-radius: 2px;
-    overflow: hidden;
-    flex-basis: 20%;
-`;
-
 const InventoryContainer = styled.div`
     width: 100%;
     display: flex;
     flex-flow: wrap;
     justify-content: center;
 `;
-const Image = styled.img`
-    display: block;
-    width: 100%;
-    
+
+const InventoryCards = styled.div`
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
 `;
 
-const CardHeading = styled.span`
-    display: block;
-    padding: 3px 5px;
-`;
+interface IImages {
+    objectId:  number,
+    imgCount: number,
+    lotImages: {}[]
+
+}
+
+export const FilterContext = React.createContext(null);
+const FilterProvider = FilterContext.Provider;
 
 const HomePage = (props) =>  {
    const background = `linear-gradient(0deg, #051713b8 0%, transparent),linear-gradient(62deg,#29685b 24%,#2a685b 49%, #29685b)`;
-   console.log(props)
-   return ( 
-        <Container>
-            <InventoryContainer>
-                {
-                    props.data.map((item)=>{
-                        return (
-                            <InventoryItem>
-                                <CardHeading>{`${item.Year} ${item.Make} ${item["Model Group"]}`}</CardHeading> 
-                                <Image src={`//${item["Image Thumbnail"]}`}/>
-                            </InventoryItem>
-                        )
-                    })
-                }
-            </InventoryContainer>
-        </Container>
-    )
+   const {totalRecords,paginationInfo,data,Attributes} = props;
+   const [selectedFilters,setFilters] = React.useState({});
+
+
+
+    return <Container>
+                <FilterProvider value={{selectedFilters, setFilters}}>
+                    <Filter {...Attributes}/>
+                    <InventoryContainer>
+                        <InventoryCards>
+                            {
+                                data && data.map( (item,index) => <Card key={index} {...item}/>)
+                            }
+                        </InventoryCards>
+                        <Pagination 
+                            {...paginationInfo} 
+                            numberOfItems={6}
+                            padding={3}
+                            pathname={"dashboard"}
+                            query={{limit:3}}
+                        />
+                    </InventoryContainer>
+                </FilterProvider>
+                </Container>
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({ params,req,res,query }) => {
+    const  {page = 1  ,limit = 100} =   query;
     try {
       let InventoryList
-      await getData(Inventory+"/Inventory",{})
-        .then(res => InventoryList = res.Inventory)
+
+      await getData(Inventory.list,{page ,limit})
+        .then(res =>{
+             console.log({res})
+             InventoryList = res.Inventory
+            })
         .catch(err=> console.error(err))
 
-      // By returning { props: item }, the StaticPropsDetail component
-      // will receive `item` as a prop at build time
-      return { props: { ...InventoryList } }
+        let Attributes
+        await getData(Inventory.attributes)
+          .then(res =>{
+               console.log({res})
+               Attributes = res.Inventory
+              })
+          .catch(err=> console.error(err))
+
+      return { props: { ...InventoryList, key: JSON.stringify(query),Attributes  } }
     } catch (err) {
       return { props: { errors: err.message } }
     }
