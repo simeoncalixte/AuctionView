@@ -68,7 +68,7 @@ const HomePage = (props) =>  {
    const background = `linear-gradient(0deg, #051713b8 0%, transparent),linear-gradient(62deg,#29685b 24%,#2a685b 49%, #29685b)`;
    const {totalRecords,paginationInfo,data,Attributes} = props;
    const [selectedFilters,setFilters] = React.useState({});
-
+   console.log(props)
 
 
     return <Container>
@@ -107,11 +107,10 @@ export const getServerSideProps: GetServerSideProps = async ({ params,req,res,qu
         let Attributes
         await getData(Inventory.attributes)
           .then(res =>{
-               console.log({res})
-               Attributes = res.Inventory
+               Attributes = res
               })
           .catch(err=> console.error(err))
-
+      console.log(Attributes);
       return { props: { ...InventoryList, key: JSON.stringify(query),Attributes  } }
     } catch (err) {
       return { props: { errors: err.message } }

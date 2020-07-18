@@ -34,6 +34,7 @@
     "@types/node-fetch": "^2.5.7",
     "@types/react-dom": "^16.9.6",
     "@types/styled-components": "^5.0.1",
+    "@welldone-software/why-did-you-render": "^4.2.6",
     "babel-loader": "^8.1.0",
     "babel-plugin-inline-react-svg": "^1.1.1",
     "jest": "^25.1.0",
