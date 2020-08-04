@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import withScrollBar from "../HOC/CustomScroll";
-import OpenAndCloseCross from "../SVG/openCloseCross";
+import withScrollBar from "../../HOC/CustomScroll";
+import OpenAndCloseCross from "../../SVG/openCloseCross";
 
 const FilterValueContainer = styled.ul <{isOpen: boolean;}>`
     height: 0px;

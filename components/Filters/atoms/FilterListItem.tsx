@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components";
-import CheckMark from "../SVG/checkMark";
+import CheckMark from "../../SVG/checkMark";
 
 const FilterLi = styled.li`
     display: flex;

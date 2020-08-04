@@ -3,12 +3,12 @@ import styled from "styled-components";
 import {FilterContext} from "../../pages/dashboard";
 import withScrollBar from "../HOC/CustomScroll";
 import CheckMark from "../SVG/checkMark";
-import FilterDropDown from "./filterDropDown";
-import FilterListItem from "./FilterListItem";
+import FilterDropDown from "./Atoms/filterDropDown";
+import FilterListItem from "./Atoms/FilterListItem";
 import {DevelopmentServer as Inventory} from "../../services/Inventory"
 import {getData} from "../../utils/NetworkRequest";
 import {GetServerSideProps,GetStaticProps} from "next";
-
+import axios from "axios";
 interface IProps {
 
     [key:string] : any[]
@@ -23,8 +23,6 @@ const CheckBoxContainer = styled.div`
     height: 24px;
     cursor: pointer;
 `;
-
-
 
 const FilterWrapper = styled.div`
     flex-basis: 20%;
@@ -53,6 +51,7 @@ const FilterValueContainerWithScroll = withScrollBar(FilterValueContainer);
 const FilterContainer = styled.section`
     position: relative;
 `;
+
 const FilterTitle = styled.h5`
     background: linear-gradient(180deg, #0000002b, transparent, #0000002b);
     font-size: 18px;
@@ -64,6 +63,7 @@ const FilterTitle = styled.h5`
     font-weight: 500;
     border-top: 2px solid #00000066;
 `;
+
 const FilterValueTitle = styled.h6`
     font-size: 18px;
     margin: 0px 5px;
@@ -83,17 +83,54 @@ const FilterDropDownChild = styled.li`
     
 `;
 
+interface IModelData {
+    vendor_id : string,
+    models: string[]
+}
+
+const {selectedFilters,setFilters} = React.useContext(FilterContext);
+
+const modelRequest = (data: IModelData[]) => {
+    console.log({data})
+    if(data){
+        return axios.get(Inventory.attributes,{
+            params: {
+                Models: data
+            }
+        }).then(res=> {
+            console.log(res)
+            if (res.data) return res.data;
+        } )
+        .catch((error)=>{
+            console.log(error)
+        })
+    }
+}
+
+
+const updateModel = ( res ) => { 
+
+
+}
+
 export default (props: IProps) => {
-    const {selectedFilters,setFilters} = React.useContext(FilterContext);
-    
+    //TODO MODIFY UPDATE CONTEXT TO INCLUDE A FETCH METHOD TO THE ASSIGNED MODELS WITHIN
+    //THE VALUE OF THE  selectedFilters.
     const updateContext = (key: string, value: IFilterAttributes ) => {
         if (! selectedFilters[key]) selectedFilters[key] = {};
+        //Toggle the selected filter;
         if (!  selectedFilters[key][value._id]) {
             // add selected Filter
-            selectedFilters[key][value._id] = value
+            selectedFilters[key][value._id] = value;
+            const queryValue =  {
+                vendor_id: value._id,
+                models: value["Model Groups"],
+            }
+            //request model then update Model setting 
+            modelRequest([queryValue]);
         }else{
             //remove selectedFilter;
-           delete selectedFilters[key][value._id]
+           delete selectedFilters[key][value._id];
         }
         setFilters(Object.assign({},selectedFilters));
     }
@@ -117,8 +154,10 @@ export default (props: IProps) => {
     const ModelGroupContainer = [];    
     if ( ModelGroupIsActive ) {
         for (let vendor in selectedFilters.Make){
-            const ModelGroups = selectedFilters.Make[vendor]["Model Groups"];
-            console.log(vendor)
+            const Models = selectedFilters.Make[vendor]["Models"];
+            console.log(selectedFilters.Make[vendor])
+            console.log({Models})
+            console.log({vendor})
             ModelGroupContainer.push(
                 <li>
                     <FilterValueTitle>
@@ -126,7 +165,7 @@ export default (props: IProps) => {
                     </FilterValueTitle>
                     <FilterValueContainer>
                         {              
-                            ModelGroups.map((Model)=>{
+                            Models.map((Model)=>{
                                 return(
                                     <FilterListItem
                                         onClickCallBack={()=>null}
@@ -139,10 +178,8 @@ export default (props: IProps) => {
                     </FilterValueContainer>
                 </li>
             )
-        }
-
+        }   
     }
-    
 
     return (
         <FilterWrapper>
@@ -156,7 +193,6 @@ export default (props: IProps) => {
                 title={"Model Group"}
                 dropDownIconWidth={"24px"}
             >
-                {ModelGroupIsActive && ModelGroupContainer}
             </FilterDropDown>
         </FilterWrapper>
         )
