@@ -26,9 +26,7 @@ export default [
         children: "Register",
         cb: (e)=>{
             if(e){
-                console.log(e)
             }            
-            console.log("register")
         }
 
     }

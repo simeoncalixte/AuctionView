@@ -4,12 +4,15 @@ import Numbers from "../../utils/numberIsBetween";
 import numberIsBetween from "../../utils/numberIsBetween";
 
 
-const Track = styled.div`
+const Track = styled.div<{trackBackground: string}>`
     display: block;
     width: 10px;
     position: relative;
     height: auto;
-    background-color: #f1ebeb1a;
+    background-color: ${props => props.trackBackground? 
+        props.trackBackground : 
+        '#f5f5f5'
+    };
     right: 1px;
     flex-basis: 10px;
 `;
@@ -62,7 +65,6 @@ const withScrollBar = (WrappedComponent: React.FunctionComponent) => {
          * the hidden scroll bar actually functioning in the background
          */
         const balanceScroll = (e) => {
-            console.log({throttle, throttleLimit,isActive: throttle == throttleLimit})
             if ( throttle == throttleLimit ){
                 const {scrollTop, scrollHeight,clientHeight} = e.target;
                 // lgSide / shortSide = longScroll / shortScroll
@@ -143,7 +145,11 @@ const withScrollBar = (WrappedComponent: React.FunctionComponent) => {
                 <WrappedComponent className={"scrollingBody"} ref={ScrollBodyReference} {...props} >
                     {props.children}
                 </WrappedComponent>
-                <Track ref={CustomScrollTrackReference} onMouseUp={MouseBodyClicked}>
+                <Track 
+                     ref={CustomScrollTrackReference} 
+                     onMouseUp={MouseBodyClicked}
+                     trackBackground={props.trackBackground}
+                >
                     <ThumbTrack 
                         ref={ThumbTrackReference}  
                         calculatedHeight={customScrollHeight} 

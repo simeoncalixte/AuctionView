@@ -6,10 +6,10 @@ import { link } from "fs";
 import Carousel from "../Carousel";
 
 const InventoryItem = styled.div`
-    margin: 10px;
+    margin: 4px;
     background-color: #ffffffd6;
     border-radius: 2px;
-    flex-basis: 20%;
+    flex-basis: 19%;
     max-height: 232px;
     overflow: hidden;
     position: relative;

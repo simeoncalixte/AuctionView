@@ -93,7 +93,6 @@ const LoginForm = (props ) => {
             onChange={
                     (e)=>{
                         e.preventDefault();
-                        console.log(e)
                     }
             }
         >
@@ -101,7 +100,6 @@ const LoginForm = (props ) => {
             <StyledInput label={"Username"} name={"username"} />
             <StyledInput label={"Password"} name={"password"}/>
             <ForgotPasswordLink 
-                onClick={(e)=> console.log(e)}
             >
                 Forgot Password?
             </ForgotPasswordLink>

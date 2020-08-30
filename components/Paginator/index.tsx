@@ -52,7 +52,6 @@ export default (props : IPagination) => {
     const Links = [];
     let startingPoint = currentPage - padding <= 0 ? 1 : currentPage - padding;
     let endPoint = startingPoint + numberOfItems <  lastPage ? startingPoint + numberOfItems : lastPage;
-    console.log({startingPoint, endPoint})
 
     let currentIndex = startingPoint;
 

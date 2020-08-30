@@ -5,12 +5,11 @@ import CheckMark from "../../SVG/checkMark";
 const FilterLi = styled.li`
     display: flex;
     justify-content: space-between;
-	padding: 5px 10px;
-	border-width: 0px 0px 1px 0px;
-	border-color: #9e9e9e;
-	border-style: solid;
-	background: rgb(2,0,36);
-	background: linear-gradient(180deg,rgb(228, 228, 240) 0%,rgb(203, 203, 203) 50%,rgba(135, 135, 135, 0.5) 100%);
+    padding: 1px 10px;
+    font-size: 14px;
+    color: #0d6855;
+    border: 1px solid #dddddd4d;
+    background-color: whitesmoke;
 `;
 
 
@@ -19,20 +18,21 @@ const CheckBoxContainer = styled.div`
     justify-content: center;
     align-items: center;
     border-radius: 3px;
-    width: 24px;
+    width: 16px;
     height: 24px;
     cursor: pointer;
 `;
 
 interface IListProps{
     onClickCallBack: ( ) => void;
-    title: string;
+    title: string | JSX.Element;
     isChecked: boolean;
+    className: string;
 
 }
 
 const ListItem = (props : IListProps ) => {
-    return  <FilterLi onClick={props.onClickCallBack}>
+    return  <FilterLi className={props.className} onClick={props.onClickCallBack}>
                 <span>{props.title}</span>
                 <CheckBoxContainer>
                     <CheckMark width={"100%"} isChecked={props.isChecked}/>

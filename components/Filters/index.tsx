@@ -1,199 +1,101 @@
 import React from "react"
 import styled from "styled-components";
-import {FilterContext} from "../../pages/dashboard";
-import withScrollBar from "../HOC/CustomScroll";
-import CheckMark from "../SVG/checkMark";
-import FilterDropDown from "./Atoms/filterDropDown";
-import FilterListItem from "./Atoms/FilterListItem";
-import {DevelopmentServer as Inventory} from "../../services/Inventory"
-import {getData} from "../../utils/NetworkRequest";
-import {GetServerSideProps,GetStaticProps} from "next";
-import axios from "axios";
-interface IProps {
+import VendorFilter from "./organisms/vendors";
+import ModelFilter from "./organisms/models";
+import DamageFilter from "./organisms/damages";
+import ColorFilter from "./organisms/colors";
+import BodyStyleFilter from "./organisms/bodystyle";
+import TransmissionFilter from "./organisms/transmission";
+import DriveFilter from "./organisms/drive";
+import EngineFilter from "./organisms/engine";
+import FuelTypeFilter from "./organisms/fueltype";
+import CylinderFilters from "./organisms/cylinders";
+import SaleStatusFilter from "./organisms/saleStatus";
+import BinarySwitch from "./molecules/binarySwitch";
+import NumericalRange from "./molecules/numericalRange";
+import NumericalRangeSlider from "./molecules/numericalRangeSlider";
 
+interface IProps {
     [key:string] : any[]
 }
 
-const CheckBoxContainer = styled.div`
+const FilterWrapper = styled.div<{displayMore:boolean}>`
     display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 3px;
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-`;
-
-const FilterWrapper = styled.div`
-    flex-basis: 20%;
+    flex-direction: column;
     padding: 0px;
     border-radius: 0px 3px 3px 0px;
-`;
-
-const FilterValueContainer = styled.ul`
-    flex-basis: 100%;
-    list-style: none;
-    padding: 0px;
-    margin: 0px;
-`;
-const FilterLi = styled.li`
-    display: flex;
-    justify-content: space-between;
-	padding: 5px 10px;
-	border-width: 0px 0px 1px 0px;
-	border-color: #9e9e9e;
-	border-style: solid;
-	background: rgb(2,0,36);
-	background: linear-gradient(180deg,rgb(228, 228, 240) 0%,rgb(203, 203, 203) 50%,rgba(135, 135, 135, 0.5) 100%);
-`;
-const FilterValueContainerWithScroll = withScrollBar(FilterValueContainer);
-
-const FilterContainer = styled.section`
+    border-bottom: 1px solid #f0f2f11f;
+    margin: 10px 5px;
+    box-shadow: 0px 10px 8px #5451515c;
+    padding-bottom: 50px;
+    padding-left: 5px;
     position: relative;
-`;
-
-const FilterTitle = styled.h5`
-    background: linear-gradient(180deg, #0000002b, transparent, #0000002b);
-    font-size: 18px;
-    margin: 0px 5px;
-    padding: 0px 5px;
-    margin: 0px;
-    box-shadow: 1px 1px 1px #0000005c;
-    color: #e7eaea;
-    font-weight: 500;
-    border-top: 2px solid #00000066;
-`;
-
-const FilterValueTitle = styled.h6`
-    font-size: 18px;
-    margin: 0px 5px;
-    background: linear-gradient(180deg,#0b493c6e,#8fa19d,#0b493c64);
-    color: white;
-    text-shadow: 1px 1px 1px #0006;
-    margin: 0px;
-    padding: 0px 5px;
-`;
-
-interface IFilterAttributes {
-    _id: string;
-    ["Model Groups"]: string[];
-}
-
-const FilterDropDownChild = styled.li`
-    
-`;
-
-interface IModelData {
-    vendor_id : string,
-    models: string[]
-}
-
-const {selectedFilters,setFilters} = React.useContext(FilterContext);
-
-const modelRequest = (data: IModelData[]) => {
-    console.log({data})
-    if(data){
-        return axios.get(Inventory.attributes,{
-            params: {
-                Models: data
-            }
-        }).then(res=> {
-            console.log(res)
-            if (res.data) return res.data;
-        } )
-        .catch((error)=>{
-            console.log(error)
-        })
+    .secondary{
+        display: ${props => props.displayMore ? 'auto': 'none'} ;
     }
-}
+    transition: all 1s linear;
+`;
+
+const FilterInputContainer = styled.section `
+    display: flex;
+    flex-direction: row;
+`;
+
+const DisplayMore = styled.div`
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    margin: 0px 10px;
+`;
 
 
-const updateModel = ( res ) => { 
+const RangeSectionWrapper = styled.div`
+    display:flex;
+    flex-direction: column;
+`;
 
-
-}
+const DropDownSectionWrapper = styled.div`
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: max-content;
+`;
 
 export default (props: IProps) => {
-    //TODO MODIFY UPDATE CONTEXT TO INCLUDE A FETCH METHOD TO THE ASSIGNED MODELS WITHIN
-    //THE VALUE OF THE  selectedFilters.
-    const updateContext = (key: string, value: IFilterAttributes ) => {
-        if (! selectedFilters[key]) selectedFilters[key] = {};
-        //Toggle the selected filter;
-        if (!  selectedFilters[key][value._id]) {
-            // add selected Filter
-            selectedFilters[key][value._id] = value;
-            const queryValue =  {
-                vendor_id: value._id,
-                models: value["Model Groups"],
-            }
-            //request model then update Model setting 
-            modelRequest([queryValue]);
-        }else{
-            //remove selectedFilter;
-           delete selectedFilters[key][value._id];
-        }
-        setFilters(Object.assign({},selectedFilters));
-    }
+    const [expansionState , setExpansionState] = React.useState(false)
 
-    React.useEffect(()=>{
-        console.log("Effected",selectedFilters?.Make)
-        const modelGroup = selectedFilters;
-    })
-
-    const Makes = props.Makes.map((make)=>{
-        const key = "Make";
-        const checked = selectedFilters[key] &&  selectedFilters[key][make._id];
-        return <FilterListItem
-                    onClickCallBack={()=> updateContext(key,make)}
-                    title={make._id}
-                    isChecked={checked}
-                />
-    })
-
-    const ModelGroupIsActive = selectedFilters && selectedFilters.Make &&  Object.keys(selectedFilters.Make).length;
-    const ModelGroupContainer = [];    
-    if ( ModelGroupIsActive ) {
-        for (let vendor in selectedFilters.Make){
-            const Models = selectedFilters.Make[vendor]["Models"];
-            console.log(selectedFilters.Make[vendor])
-            console.log({Models})
-            console.log({vendor})
-            ModelGroupContainer.push(
-                <li>
-                    <FilterValueTitle>
-                        {vendor}
-                    </FilterValueTitle>
-                    <FilterValueContainer>
-                        {              
-                            Models.map((Model)=>{
-                                return(
-                                    <FilterListItem
-                                        onClickCallBack={()=>null}
-                                        title={Model}
-                                        isChecked={false}
-                                    />
-                                )
-                            })
-                        }
-                    </FilterValueContainer>
-                </li>
-            )
-        }   
-    }
+    const toggleDisplayMore = () => setExpansionState(!expansionState);
 
     return (
-        <FilterWrapper>
-            <FilterDropDown 
-                title={"Makes"}
-                dropDownIconWidth={"24px"}
-            >
-                {Makes}
-            </FilterDropDown>
-            <FilterDropDown 
-                title={"Model Group"}
-                dropDownIconWidth={"24px"}
-            >
-            </FilterDropDown>
+        <FilterWrapper displayMore={expansionState}>
+            <FilterInputContainer>
+                <RangeSectionWrapper>
+                    <NumericalRange title={"Year"}/>
+                    <NumericalRange title={"Purchase Price"} className={"secondary"}/>
+                    <NumericalRange title={"Odometer Range"} className={"secondary"}/>       
+                </RangeSectionWrapper>
+
+                <DropDownSectionWrapper>
+                    <VendorFilter/>
+                    <ModelFilter/>
+                    <DamageFilter/>
+                    <BodyStyleFilter/>
+                    <TransmissionFilter/>
+                    <DriveFilter/>
+                    <EngineFilter/>
+                    <FuelTypeFilter/>
+                    <CylinderFilters/>
+                    <SaleStatusFilter/>
+                    <ColorFilter/>
+                </DropDownSectionWrapper>
+                <RangeSectionWrapper>
+                    <BinarySwitch title={"Has Keys"}/>
+                    <BinarySwitch title={"Has Keys"} className={"secondary"}/>
+                    <BinarySwitch title={"Has Keys"} className={"secondary"}/>
+                </RangeSectionWrapper>
+            </FilterInputContainer>
+            <DisplayMore onClick={toggleDisplayMore}>more</DisplayMore>
+
         </FilterWrapper>
         )
 } 

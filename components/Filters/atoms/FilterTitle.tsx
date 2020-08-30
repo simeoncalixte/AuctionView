@@ -16,7 +16,7 @@ const FilterTitle = styled.h5`
     justify-content: space-between;
 `;
 interface ITitleProps {
-    onClick: Function,
+    onClick: ()=> void,
     title: string
 }
 const FilterTitleComponent = (props : ITitleProps ) => {

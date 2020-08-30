@@ -8,13 +8,14 @@ import {GetServerSideProps,GetStaticProps} from "next";
 import Pagination from "../components/Paginator";
 import Filter from "../components/Filters";
 import {DevelopmentServer as Inventory} from "../services/Inventory";
-import {getData} from "../utils/NetworkRequest"
-
+import {getData} from "../utils/NetworkRequest";
+import InventoryRequest from "../apiRequest/InventoryItems";
+import ParamMap from "../components/InventoryUI/utils/paramMap";
 
 const Container = styled.div`
     width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 `;
 
 const SearchBar = styled(DefaultInput)`
@@ -61,19 +62,46 @@ interface IImages {
 
 }
 
+interface ILookupTable {
+    [key:string]: string,
+}
+interface IFilterContext {
+    vendor?: ILookupTable,
+    models?: ILookupTable 
+}
+
 export const FilterContext = React.createContext(null);
 const FilterProvider = FilterContext.Provider;
 
+
 const HomePage = (props) =>  {
    const background = `linear-gradient(0deg, #051713b8 0%, transparent),linear-gradient(62deg,#29685b 24%,#2a685b 49%, #29685b)`;
-   const {totalRecords,paginationInfo,data,Attributes} = props;
    const [selectedFilters,setFilters] = React.useState({});
-   console.log(props)
+   const [inventory,setInventory] = React.useState(props);
+   const {totalRecords,paginationInfo,data,Attributes} = inventory;
 
+   const paramsCreator = () => {
+       const slots = {}
+        Object.keys(selectedFilters).forEach(key=>{
+            try{
+                slots[key] = ParamMap(key)(selectedFilters[key]);
+            }catch(e){
+                console.error(e)
+            }
+        })
+        return slots;
+   }
+
+    React.useEffect(()=>{
+        console.log("DASHBOARD IS FILTERING", selectedFilters);
+        const params = paramsCreator();
+        console.log(params)
+        InventoryRequest(params).then((res)=> setInventory(res.Inventory));
+    },[selectedFilters]);
 
     return <Container>
                 <FilterProvider value={{selectedFilters, setFilters}}>
-                    <Filter {...Attributes}/>
+                    <Filter/>
                     <InventoryContainer>
                         <InventoryCards>
                             {
@@ -104,14 +132,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params,req,res,qu
             })
         .catch(err=> console.error(err))
 
-        let Attributes
-        await getData(Inventory.attributes)
-          .then(res =>{
-               Attributes = res
-              })
-          .catch(err=> console.error(err))
-      console.log(Attributes);
-      return { props: { ...InventoryList, key: JSON.stringify(query),Attributes  } }
+      return { props: { ...InventoryList, key: JSON.stringify(query)  } }
     } catch (err) {
       return { props: { errors: err.message } }
     }

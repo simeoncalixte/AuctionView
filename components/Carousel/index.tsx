@@ -56,13 +56,9 @@ export default (props: ICarousel) => {
             <span onClick={(e) => rotateCarousel(1)}> Next</span>
         </Controls>
     )
-   console.log({statedChildren})
     return (
         <>
-            <PresentationDiv ref={RotatingView} 
-            onScroll={(e)=>{
-                console.log(e.target)
-            }}>
+            <PresentationDiv ref={RotatingView} >
                 {
                     props.children.slice(range.start,range.end)
                         .map((item => {
