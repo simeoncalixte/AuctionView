@@ -1,9 +1,9 @@
 import React from "react";
-import {FilterContext} from "../../../pages/dashboard";
+import FilterContext from "../../../Context/FilterContext";
 import FilterValueTitle from "../atoms/FilterValueTitle";
 import FilterValueContainer from "../atoms/FilterValueContainer";
 import FilterListItem from "../atoms/FilterListItem";
-import FilterDropDown from "../molecules/DropDownWithSearch";
+import FilterDropDown from "../atoms/DropDownWithSearch";
 import attributeRequest from "../../../apiRequest/InventoryAttribute";
 
 const updateContext = (key: string, value: string, objectToManage: object, objectSetter ) => {

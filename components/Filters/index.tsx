@@ -10,10 +10,11 @@ import DriveFilter from "./organisms/drive";
 import EngineFilter from "./organisms/engine";
 import FuelTypeFilter from "./organisms/fueltype";
 import CylinderFilters from "./organisms/cylinders";
+import BinarySwitch from "./atoms/binarySwitch";
 import SaleStatusFilter from "./organisms/saleStatus";
-import BinarySwitch from "./molecules/binarySwitch";
-import NumericalRange from "./molecules/numericalRange";
-import NumericalRangeSlider from "./molecules/numericalRangeSlider";
+import Switch from "./molecules/ConnectedSwitch";
+import NumericalRange from "./atoms/numericalRange";
+import ConnectedNumericalRange from "./molecules/ConnectedNumericalRange";
 
 interface IProps {
     [key:string] : any[]
@@ -62,17 +63,16 @@ const DropDownSectionWrapper = styled.div`
 `;
 
 export default (props: IProps) => {
-    const [expansionState , setExpansionState] = React.useState(false)
-
+    const [expansionState , setExpansionState] = React.useState(false);
     const toggleDisplayMore = () => setExpansionState(!expansionState);
 
     return (
         <FilterWrapper displayMore={expansionState}>
             <FilterInputContainer>
                 <RangeSectionWrapper>
-                    <NumericalRange title={"Year"}/>
-                    <NumericalRange title={"Purchase Price"} className={"secondary"}/>
-                    <NumericalRange title={"Odometer Range"} className={"secondary"}/>       
+                    <ConnectedNumericalRange title={"Year"} filterKey="year"/>
+                    <ConnectedNumericalRange title={"Purchase Price"} filterKey="price"/>
+                    <ConnectedNumericalRange title={"Odometer Range"} filterKey="odometerRange"/>       
                 </RangeSectionWrapper>
 
                 <DropDownSectionWrapper>
@@ -89,9 +89,9 @@ export default (props: IProps) => {
                     <ColorFilter/>
                 </DropDownSectionWrapper>
                 <RangeSectionWrapper>
-                    <BinarySwitch title={"Has Keys"}/>
-                    <BinarySwitch title={"Has Keys"} className={"secondary"}/>
-                    <BinarySwitch title={"Has Keys"} className={"secondary"}/>
+                    <Switch filterKey={"hasKeys"} title={"Has Key"}/>
+                    <Switch filterKey={"buyNowRequired"} title={"Buy Now"}/>
+                    <Switch filterKey={"runsAndDrive"} title={"Runs and Drive"}/>
                 </RangeSectionWrapper>
             </FilterInputContainer>
             <DisplayMore onClick={toggleDisplayMore}>more</DisplayMore>

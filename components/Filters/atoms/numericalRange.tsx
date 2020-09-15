@@ -1,7 +1,7 @@
 import React from "react";
 import styled from 'styled-components';
-import Title from "../atoms/Title";
-
+import Title from "./Title";
+import useDebounce from "../../CustomHooks/Debounce"
 const RangeConstraintContainer = styled.div`
     display: flex;
     justify-content: space-around;
@@ -57,25 +57,40 @@ const LeftContainer = styled.div`
     text-align: left;
 `;
 
-
+interface IRange {
+    min: number,
+    max: number
+}
 interface INumericalRange {
-    defaultRange?: {
-        min: number,
-        max: number
-    };
+    defaultRange?: IRange;
     title: string;
     className?: string;
+    onChangeCallBack: (rangeValue: IRange) => void;
 }
 
 const defaultRange = {
     min:0,
     max: 100,
 }
+
+
+//TODO:: ADD DEBOUNCE function;
 const NumericalRange = (props: INumericalRange ) => {
     const [rangeValue,setRangeValue] = React.useState(props.defaultRange? props.defaultRange : defaultRange);
+    const debounced = useDebounce(()=> props.onChangeCallBack(rangeValue),1000,[rangeValue])
+
+    const inputUpdate = (e)=> {
+        const newRange = Object.assign({},rangeValue);
+        const {name,value} = e.target;   
+        if(name){
+            newRange[name] = value;
+            setRangeValue(newRange)
+        }     
+    }
+
 
     return (
-        <Wrapper className={props.className}>
+        <Wrapper onChangeCapture={inputUpdate} className={props.className}>
             <Title>{props.title}</Title>
             <RangeConstraintContainer>
                 <span>{rangeValue.start}</span>
@@ -83,10 +98,10 @@ const NumericalRange = (props: INumericalRange ) => {
             </RangeConstraintContainer>
             <RangeWrapper>
                 <LeftContainer>
-                    <LeftInput/>
+                    <LeftInput  name="min" value={rangeValue.min}/>
                 </LeftContainer>
                 <RightContainer>
-                    <RightInput/>
+                    <RightInput name="max" value={rangeValue.max}/>
                 </RightContainer>
             </RangeWrapper>
             <LabelContainer>

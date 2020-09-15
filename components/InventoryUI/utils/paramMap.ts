@@ -3,9 +3,8 @@ export const AttributeMap = new Map();
 
 const arrayOfType = [
   {
-    key: /(make(s)*|vendor(s)*)/gi,
+    key: /^(make(s)*|vendor(s)*|damage(s)*|body(s)*|transmission(s)*|^drive(s)*|engine(s)*|fueltype(s)*|cylinder(s)*|salestatus(es)*|color(s)*)/gi,
     value: (object) => {
-        console.log("this is trying to be mapped", object)
         const reduceFunction = (previousValue: string, currentValue: string) => (
             `${previousValue},${currentValue}`
         );
@@ -14,30 +13,42 @@ const arrayOfType = [
     }
   },
   {
-    key: /model(s)*/gi,
+    key: /^model(s)*/gi,
     value: (object) => {
-        console.log("this is trying to be mapped", object)
-        const reduceFunction2 = (previousValue: string, currentValue: string) => (
-            `${previousValue},${currentValue}`
-        );
-        const reduceFunction = (previousValue: string, currentValue: string) => (
-            `${previousValue}, ${Object.keys(object).reduce(reduceFunction2)}`
-        );
-        
-        Object.keys(object).reduce(key => {
-            console.log({keyValue: object[key]})
-        })
-        return Object.keys(object).reduce(reduceFunction);
+
+        const keys = Object.keys(object);
+        const vendorInitialValue = ``;
+        //iterate through vendors
+        const param = keys.reduce((previous,current,currentIndex)=>{
+          const initialValue = ``;
+          //iterate through models
+          const newString = Object.keys(object[current]).reduce(
+            (previous,current,index) => {
+              if (index == 0) return current
+              return `${previous},${current}`
+            },
+            initialValue
+          );
+          if(currentIndex === 0) return newString;
+          return `${previous},${newString}`
+        },vendorInitialValue);
+
+        return param;
 
     }
   },
   {
-    key: /fuelType(s)*/gi,
-    value: 'FuelType'
+    key: /^(buynow|hasKeys|runsAndDrive)/gi,
+    value: (value: boolean) : boolean => {
+      return value
+    }
+    
   },
   {
-    key: /transmission(s)*/,
-    value: 'Transmission'
+    key: /(price(s)*|year(s)*|odometer(s)*)/,
+    value: (value) =>  {
+      return  `${value.min}-${value.max}`
+    }
   },
   {
     key: /damage(s)*/gi,
@@ -85,9 +96,7 @@ arrayOfType.forEach(collection=> {
 
 const getAttribute = (testCase: string) => {
   for (let [key,value] of AttributeMap) {
-      console.log({testCase})
       if(testCase.match(key)){
-          console.log("key Matched")
         return AttributeMap.get(key);
       }
   }

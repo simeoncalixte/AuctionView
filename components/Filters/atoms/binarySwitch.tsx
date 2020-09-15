@@ -1,6 +1,6 @@
 import React from "react";
 import styled from 'styled-components';
-import Title from "../atoms/Title";
+import Title from "./Title";
 
 const SwitchContainer = styled.div`
     display: inline-block;
@@ -48,13 +48,21 @@ interface IBinarySwitch {
     defaultValue?: boolean;
     className?: string;
     title: string;
+    onChangeCallBack: (isChecked: boolean) => void;
 }
-const BinarySwitch = (props: IBinarySwitch ) => {
-    const [binary,setBinaryValue] = React.useState(props.defaultValue? props.defaultValue : false);
 
+const BinarySwitch = (props: IBinarySwitch ) => {
+    let timeOut = null
+    const [binary,setBinaryValue] = React.useState(props.defaultValue? props.defaultValue : false);
+    
     const toggleBinary = (e) => {
         setBinaryValue(!binary)
     }
+
+    React.useEffect(()=>{
+        if (timeOut) clearTimeout(timeOut)
+        timeOut = setTimeout(()=>props.onChangeCallBack(binary),0);
+    },[binary])
 
     return (
         <Wrapper className={props.className}>

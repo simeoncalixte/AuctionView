@@ -1,10 +1,10 @@
 import React from "react";
 import FilterListItem from "../atoms/FilterListItem";
 import attributeRequest from "../../../apiRequest/InventoryAttribute";
-import {FilterContext} from "../../../pages/dashboard";
+import FilterContext from "../../../Context/FilterContext";
 import axios from "axios";
 import { Development as Inventory } from "../../../services/mock";
-import FilterDropDown from "../molecules/DropDownWithSearch";
+import FilterDropDown from "../atoms/DropDownWithSearch";
 import Searchable from "../../HOC/Searchable";
 import AttributeRequest from "../../../apiRequest/InventoryAttribute";
 import modelRequest from "../../../apiRequest/modelRequest";

@@ -32,6 +32,7 @@ interface IListProps{
 }
 
 const ListItem = (props : IListProps ) => {
+    const [isChecked,setChecked] =  React.useState()
     return  <FilterLi className={props.className} onClick={props.onClickCallBack}>
                 <span>{props.title}</span>
                 <CheckBoxContainer>

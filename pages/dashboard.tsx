@@ -11,7 +11,7 @@ import {DevelopmentServer as Inventory} from "../services/Inventory";
 import {getData} from "../utils/NetworkRequest";
 import InventoryRequest from "../apiRequest/InventoryItems";
 import ParamMap from "../components/InventoryUI/utils/paramMap";
-
+import FilterContext from "../Context/FilterContext";
 const Container = styled.div`
     width: 100%;
     display: flex;
@@ -46,6 +46,8 @@ const InventoryContainer = styled.div`
     display: flex;
     flex-flow: wrap;
     justify-content: center;
+    flex-direction: column;
+
 `;
 
 const InventoryCards = styled.div`
@@ -70,8 +72,7 @@ interface IFilterContext {
     models?: ILookupTable 
 }
 
-export const FilterContext = React.createContext(null);
-const FilterProvider = FilterContext.Provider;
+
 
 
 const HomePage = (props) =>  {
@@ -93,19 +94,17 @@ const HomePage = (props) =>  {
    }
 
     React.useEffect(()=>{
-        console.log("DASHBOARD IS FILTERING", selectedFilters);
         const params = paramsCreator();
-        console.log(params)
         InventoryRequest(params).then((res)=> setInventory(res.Inventory));
     },[selectedFilters]);
 
     return <Container>
-                <FilterProvider value={{selectedFilters, setFilters}}>
+                <FilterContext.Provider value={{selectedFilters, setFilters}}>
                     <Filter/>
                     <InventoryContainer>
                         <InventoryCards>
                             {
-                                data && data.map( (item,index) => <Card key={index} {...item}/>)
+                                data && data.map( (item,index) => <Card key={item._id} {...item}/>)
                             }
                         </InventoryCards>
                         <Pagination 
@@ -116,7 +115,8 @@ const HomePage = (props) =>  {
                             query={{limit:3}}
                         />
                     </InventoryContainer>
-                </FilterProvider>
+
+                </FilterContext.Provider>
                 </Container>
 };
 
@@ -127,7 +127,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params,req,res,qu
 
       await getData(Inventory.list,{page ,limit})
         .then(res =>{
-             console.log({res})
              InventoryList = res.Inventory
             })
         .catch(err=> console.error(err))

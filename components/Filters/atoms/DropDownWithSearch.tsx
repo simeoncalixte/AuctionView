@@ -3,8 +3,8 @@ import styled from "styled-components";
 import withScrollBar from "../../HOC/CustomScroll";
 import Searchable from "../../HOC/Searchable";
 import OpenAndCloseCross from "../../SVG/openCloseCross";
-import Search from "../atoms/Search";
-import Title from "../atoms/Title";
+import Search from "./Search";
+import Title from "./Title";
 
 const FilterValueContainer = styled.ul`
     height: 250px;
