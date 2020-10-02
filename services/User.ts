@@ -6,9 +6,9 @@ export const MockInventory  = {
 
 const developmentDomain = 'http://127.0.0.1:8000/'
 export const  DevelopmentServer = {
-    list:`${developmentDomain}/Inventory`,
-    attributes: `${developmentDomain}/Inventory/attributes`,
-    item: `${developmentDomain}/Inventory/item`,
+    login:`${developmentDomain}/login`,
+    register: `${developmentDomain}/register`,
+    update: `${developmentDomain}/update`,
 } 
 
 export default DevelopmentServer 

@@ -92,10 +92,6 @@ const NumericalRange = (props: INumericalRange ) => {
     return (
         <Wrapper onChangeCapture={inputUpdate} className={props.className}>
             <Title>{props.title}</Title>
-            <RangeConstraintContainer>
-                <span>{rangeValue.start}</span>
-                <span>{rangeValue.end}</span>
-            </RangeConstraintContainer>
             <RangeWrapper>
                 <LeftContainer>
                     <LeftInput  name="min" value={rangeValue.min}/>

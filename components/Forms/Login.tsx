@@ -3,7 +3,7 @@ import withModal, {ModalContext}  from "../Modal";
 import styled from "styled-components";
 import {Button,InputText} from "../FormElements";
 import {postData} from "../../utils/NetworkRequest";
-
+import UserServices from "../../services/User";
 
 
 const Form = styled.form`

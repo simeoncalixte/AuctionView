@@ -78,11 +78,7 @@ const NumericalRange = (props: INumericalRangeSlider ) => {
 
     return (
         <FilterWrapper>
-            <Title for={props.title}>{props.title}</Title>
-            <RangeConstraintContainer>
-                <span>{rangeValue.start}</span>
-                <span>{rangeValue.end}</span>
-            </RangeConstraintContainer>
+            <Title htmlFor={props.title}>{props.title}</Title>
             <RangeWrapper>
                 <LeftContainer>
                 </LeftContainer>

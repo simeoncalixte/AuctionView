@@ -35,7 +35,8 @@ const fontFamily = ( font : IFonts) => `
             font.src ? 
                 font.src
                 .map( indiSrc => `${indiSrc.sourceType}(${indiSrc.source}) ${indiSrc.format? `format(${indiSrc.format})` : `` } `) 
-                .reduce( (string,currentString) => string.concat(","+currentString)) : ``
+                .reduce( (string,currentString) => string.concat(","+currentString)) 
+                : ``
         };
     ${font.unicodeRange ? `unicode-range:${font.unicodeRange};`:``}
     ${font.fontVariant ? `font-variant:${font.fontVariant};`:``}

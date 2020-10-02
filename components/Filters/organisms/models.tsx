@@ -65,7 +65,7 @@ const ModelFilters = (props) => {
             const reducedSelection = Queue?.map( (vendor) => {
                 return {vendor_id: vendor}
             });
-            modelRequest(JSON.stringify(reducedSelection))
+            modelRequest(reducedSelection)
             .then(updateLookUp)
         } 
     }

@@ -1,5 +1,6 @@
 import React, { Props } from  "react";
 import styled from "styled-components";
+import CarouselContainer from "./CarouselContainer";
 
 const FlexItem = styled.div`
     /** they assign a height on the element which means you might have to manage height here */
@@ -37,38 +38,56 @@ const Controls = styled.span`
     }
 `;
 
+const CarouselWrapper = styled.div`
+    width: 500px;
+    display:block;
+`;
 
+const Image = styled.img`
+    width:100%
+`;
+
+const FrameTrack = styled.figure``;
+
+const SeatTrack = styled.div`
+    display: flex;
+    flex-direction: row;
+`;
+const Seats = styled.div`
+    width: 50%;
+`;
 
 export default (props: ICarousel) => {
-    const RotatingView = React.useRef<HTMLDivElement>();
-    const [range,setRange] = React.useState({start: 0, end: 3});
-    let [index,setIndex] = React.useState(0);
-    let [statedChildren,setStatedChildren] = React.useState(props.children);
-    
-    const rotateCarousel = (incrementBy: number) => {
-        const Element =  RotatingView.current;
-        setIndex(index + incrementBy % props.children.length)    
-    }
+    const [seats,setSeats] = React.useState(null);
+    const carouselFrameHD = React.useRef<HTMLElement>(null);
+    const carouselFrameStandard = React.useRef(null);
+    const seatRef = React.useRef(null);
+    const [settings,setSettings] = React.useState({
+        currentIndex: 0,
+    })
 
-    const buttons = ( 
-        <Controls>
-            <span onClick={(e) => rotateCarousel(-1)}>Previous</span>
-            <span onClick={(e) => rotateCarousel(1)}> Next</span>
-        </Controls>
-    )
-    return (
-        <>
-            <PresentationDiv ref={RotatingView} >
-                {
-                    props.children.slice(range.start,range.end)
-                        .map((item => {
-                            return <FlexItem>
-                                {item}
-                            </FlexItem>
-                        }))
-                }
-            </PresentationDiv>
-            {buttons}
-        </>
-    )
+
+    const thumbNails = props?.imageCollection?.images?.thumbNails?.map((src)=>{    
+        return <Image src={`${src}`}/>
+    })
+
+    const hdImages = props?.imageCollection?.images?.hdImages?.map((src)=>{    
+        return <Image src={`${src}`}/>
+    })
+
+    const standardImages = props?.imageCollection?.images?.standard?.map((src)=>{    
+        return <Image src={`${src}`}/>
+    })
+
+    if(typeof window!=="undefined"){
+        return( 
+         <CarouselWrapper> 
+             <CarouselContainer activeIndex={settings.currentIndex}>
+              {hdImages}
+             </CarouselContainer>
+         </CarouselWrapper>
+         );
+    }
+    return null
+
 }

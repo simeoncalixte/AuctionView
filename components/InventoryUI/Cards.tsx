@@ -158,7 +158,7 @@ export default  (item) => {
     console.log(parseDate(item["Sale Date M/D/CY"],item["Time Zone"]))
     return (
         <InventoryItem>
-            <Link href="/Item/[inventory_id]" as={`/Item/${item._id}`}> 
+            <Link href="/item/[inventory_id]" as={`/item/${item.VIN}`}> 
                 <CardHeading>{`${item.Year} ${item.Make} ${item["Model Group"]}`}</CardHeading>
             </Link>
             <CardAttributes
