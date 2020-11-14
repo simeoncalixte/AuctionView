@@ -1,7 +1,7 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const FilterContainer = styled.section`
-    position: relative;
+  position: relative;
 `;
 
 export default FilterContainer;

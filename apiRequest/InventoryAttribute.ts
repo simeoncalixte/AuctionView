@@ -1,19 +1,22 @@
 import axios from "axios";
-import {DevelopmentServer as Inventory} from "../services/Inventory"
+import { DevelopmentServer as Inventory } from "../services/Inventory";
 
 interface IModelData {
-    vendor_id : string,
-    models?: string[]
+  vendor_id: string;
+  models?: string[];
 }
 
 const attributeRequest = (params) => {
-        return axios.get(Inventory.attributes,{params})
-        .then(res=> {
-            if (res.data) return res.data;
-        } )
-        .catch((error)=>{
-            console.log(error)
-        })
-}
+  console.log(Inventory.attributes);
+  return axios
+    .get(Inventory.attributes, { params })
+    .then((res) => {
+      console.log(res);
+      if (res.data) return res.data;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
-export default attributeRequest
+export default attributeRequest;

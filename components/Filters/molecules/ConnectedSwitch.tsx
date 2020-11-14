@@ -4,22 +4,24 @@ import FilterConext from "../../../Context/FilterContext";
 import { getServerSideProps } from "../../../pages/dashboard";
 import FilterContext from "../../../Context/FilterContext";
 
-
 interface IProps {
-    filterKey : string;
-    title: string;
+  filterKey: string;
+  title: string;
 }
 
-const FilterSwitch = (props : IProps) => {
-    const {selectedFilters,setFilters} = React.useContext(FilterContext);
+const FilterSwitch = (props: IProps) => {
+  const { selectedFilters, setFilters } = React.useContext(FilterContext);
 
-    const callBack = (value: boolean ) => {
-        const newFilters = Object.assign({},selectedFilters);
-        if (value){ newFilters[props.filterKey] = value } 
-        else if (!value && newFilters[props.filterKey]) { delete newFilters[props.filterKey] };
-        setFilters(newFilters);
+  const callBack = (value: boolean) => {
+    const newFilters = Object.assign({}, selectedFilters);
+    if (value) {
+      newFilters[props.filterKey] = value;
+    } else if (!value && newFilters[props.filterKey]) {
+      delete newFilters[props.filterKey];
     }
-    return <BinarySwitch title={props.title} onChangeCallBack={callBack}/>
-}
+    setFilters(newFilters);
+  };
+  return <BinarySwitch title={props.title} onChangeCallBack={callBack} />;
+};
 
 export default FilterSwitch;

@@ -1,10 +1,9 @@
-import React, {FunctionComponent, Context } from "react";
-import styled, {createGlobalStyle} from "styled-components";
+import React, { FunctionComponent, Context } from "react";
+import styled, { createGlobalStyle } from "styled-components";
 import addAlpha from "../../utils/ColorPallet/addAlpha";
 import colorsPallet from "../../utils/ColorPallet";
-import {buildFontFamilies} from "../../utils/fonts";
+import { buildFontFamilies } from "../../utils/fonts";
 import Navigation from "../../components/Navigation";
-
 
 const GlobalStyle = createGlobalStyle`
     @font-face {
@@ -38,16 +37,13 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const Wrapper = (WrappingComponent: FunctionComponent) => (props) => {
-      return (
-        <>
-            <GlobalStyle/>
-            <Navigation/>
-            <WrappingComponent {...props}/>
-        </>
-      )
-    }
+  return (
+    <>
+      <GlobalStyle />
+      <Navigation />
+      <WrappingComponent {...props} />
+    </>
+  );
+};
 
-
-
-  export default Wrapper
-   
+export default Wrapper;
