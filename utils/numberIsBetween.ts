@@ -1,3 +1,3 @@
 export default (number, start, end) => {
-    return false
-}
+  return false;
+};

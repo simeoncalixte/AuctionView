@@ -1,74 +1,80 @@
-import React, { Props } from  "react";
+import React, { Props } from "react";
 import styled from "styled-components";
+import CarouselContainer from "./CarouselContainer";
 
 const FlexItem = styled.div`
-    /** they assign a height on the element which means you might have to manage height here */
-    background: #8C8; 
-    flex: 0 0 100%;
-    scroll-snap-align: start;
-    transition: all 1s 
-    `;
+  /** they assign a height on the element which means you might have to manage height here */
+  background: #8c8;
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  transition: all 1s;
+`;
 
 const PresentationDiv = styled.div`
-    display: flex;
-    flex-direction: row;
-    transition: all 0.5s ease;
-    position: relative;
-    overflow-x: auto;
-    scroll-snap-type: block;
-    ::-webkit-scrollbar {    display: none;}    
-    & * {
-        flex: 0 0 100%;
-    }
+  display: flex;
+  flex-direction: row;
+  transition: all 0.5s ease;
+  position: relative;
+  overflow-x: auto;
+  scroll-snap-type: block;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  & * {
+    flex: 0 0 100%;
+  }
 `;
 
 const Controls = styled.span`
-    position: absolute;
-    z-index: 1;
-    color: red;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 0px 9px;
-    box-sizing: border-box;
-    top: 50%;
-    & * {
-        cursor: pointer;
-    }
+  position: absolute;
+  z-index: 1;
+  color: red;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 9px;
+  box-sizing: border-box;
+  top: 50%;
+  & * {
+    cursor: pointer;
+  }
 `;
 
+const CarouselWrapper = styled.div`
+  width: 500px;
+  display: block;
+`;
 
+const Image = styled.img`
+  width: 100%;
+`;
 
-export default (props: ICarousel) => {
-    const RotatingView = React.useRef<HTMLDivElement>();
-    const [range,setRange] = React.useState({start: 0, end: 3});
-    let [index,setIndex] = React.useState(0);
-    let [statedChildren,setStatedChildren] = React.useState(props.children);
-    
-    const rotateCarousel = (incrementBy: number) => {
-        const Element =  RotatingView.current;
-        setIndex(index + incrementBy % props.children.length)    
+export default (props) => {
+  const thumbNails = props?.imageCollection?.images?.thumbNails?.map((src) => {
+    return <Image src={`${src}`} />;
+  });
+
+  const hdImages = props?.imageCollection?.images?.hdImages?.map((src) => {
+    return <Image src={`${src}`} />;
+  });
+
+  const standardImages = props?.imageCollection?.images?.standard?.map(
+    (src) => {
+      return <Image src={`${src}`} />;
     }
+  );
 
-    const buttons = ( 
-        <Controls>
-            <span onClick={(e) => rotateCarousel(-1)}>Previous</span>
-            <span onClick={(e) => rotateCarousel(1)}> Next</span>
-        </Controls>
-    )
-    return (
-        <>
-            <PresentationDiv ref={RotatingView} >
-                {
-                    props.children.slice(range.start,range.end)
-                        .map((item => {
-                            return <FlexItem>
-                                {item}
-                            </FlexItem>
-                        }))
-                }
-            </PresentationDiv>
-            {buttons}
-        </>
-    )
-}
+  console.log({ hdImages });
+
+  return (
+    <CarouselContainer
+      width={"100%"}
+      frameBasis={100}
+      showPreviousNextIndicator={true}
+      showIndexIndicators={true}
+    >
+      {hdImages}
+    </CarouselContainer>
+  );
+  return null;
+};

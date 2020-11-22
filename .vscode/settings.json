@@ -5,5 +5,8 @@
     "cSpell.words": [
         "animatable",
         "paginator"
-    ]
+    ],
+    // Set the default
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
 }

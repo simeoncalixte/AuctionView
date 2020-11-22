@@ -1,16 +1,12 @@
-
-import React,{useState} from "react";
-import Link  from "next/link";
+import React, { useState } from "react";
+import Link from "next/link";
 import styled from "styled-components";
-
-
-
 
 const ActiveStyle = `
     color: #03624c;
     background: white;
 `;
-export const navigationLinkStyles = (isActive: boolean ) => `
+export const navigationLinkStyles = (isActive: boolean) => `
     margin: 0px 2px;
     color: white;
     padding: 5px;
@@ -22,16 +18,16 @@ export const navigationLinkStyles = (isActive: boolean ) => `
     :hover{
         ${ActiveStyle}
     }
-`
-export const AnchorStyles = styled.a<{isActive: ILink["isActive"]}>`
-    ${props => navigationLinkStyles(props.isActive)}
+`;
+export const AnchorStyles = styled.a<{ isActive: ILink["isActive"] }>`
+  ${(props) => navigationLinkStyles(props.isActive)}
 `;
 
-
-
-export const ButtonStyles = styled.button<{isActive: ILink["isActive"]}>`
-    background: none;
-    border: none;
-    font-size: initial;
-    ${props => navigationLinkStyles(props.isActive)}
+export const ButtonStyles = styled.button<{
+  isActive: ILink["isActive"];
+}>`
+  background: none;
+  border: none;
+  font-size: initial;
+  ${(props) => navigationLinkStyles(props.isActive)}
 `;
