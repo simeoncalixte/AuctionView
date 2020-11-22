@@ -1,6 +1,6 @@
 import React from "react";
-import Login from "../Forms/Login";
-import SignUp from "../Forms/SignUp";
+import Login from "../Forms/Authentication/Login";
+import SignUp from "../Forms/Authentication/SignUp";
 
 export default [
 	{

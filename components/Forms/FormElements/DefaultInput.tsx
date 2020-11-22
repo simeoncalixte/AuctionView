@@ -3,6 +3,7 @@ import styled from "styled-components";
 import ColorPallet from "../../../utils/ColorPallet";
 import addAlpha from "../../../utils/ColorPallet/addAlpha";
 import { TValidationRules } from "../module";
+
 type TLabelPostion = "top" | "side";
 
 interface IInput extends InputHTMLAttributes<HTMLInputElement> {
@@ -21,11 +22,10 @@ interface InputWithLabel extends IInput {
 	lablePosition?: TLabelPostion;
 	label?: string;
 	error?: TValidationRules;
+	gridColumns?: string;
 }
 
-const Label = styled.label<{ labelPosition: string }>`
-	display: ${(props) => (props.labelPosition ? props.labelPosition : "block")};
-`;
+const Label = styled.label<{ labelPosition: string }>``;
 
 const Input = styled.input<IInput>`
 	background-color: ${addAlpha(ColorPallet.apricotWhite, 0.95)};
@@ -35,7 +35,31 @@ const Input = styled.input<IInput>`
 	border-width: 2px;
 `;
 
-const InputContainer = styled.div<{ errorExist: boolean }>`
+const InputContainer = styled.div<{
+	errorExist: boolean;
+	gridColumns?: string;
+	labelPosition: TLabelPostion;
+}>`
+	margin-bottom: 5px;
+	width: 100%;
+	padding-left: 15px;
+	letter-spacing: 1px;
+	box-sizing: border-box;
+	font-size: 14px;
+	input {
+		width: 100%;
+		display: ${(props) =>
+			props?.labelPosition === "side" ? "inline-block" : "block"};
+		background-color: #fffffff2;
+		border-radius: 4px;
+		border-style: solid;
+		border-color: #95959545;
+		border-width: 1px;
+		:focus {
+			background: #efe;
+		}
+	}
+	${(props) => (props.gridColumns ? `grid-column: ${props.gridColumns};` : ``)}
 	${(props) => {
 		const { errorExist } = props;
 		if (errorExist) {
@@ -85,7 +109,11 @@ export const withLabel = (props: InputWithLabel): JSX.Element => {
 			  })
 			: null;
 	return (
-		<InputContainer className={className} errorExist={errorExist}>
+		<InputContainer
+			className={className}
+			gridColumns={props.gridColumns}
+			errorExist={errorExist}
+		>
 			{label}
 			{requiredError}
 			<Input {...props} />

@@ -27,7 +27,7 @@ export type TValidationRules = {
 	[EValidationTypes.mustMatchSibling]?: string;
 };
 
-export type TFieldValidations = {
+export type TFieldValidation = {
 	[key: string]: TValidationRules;
 };
 

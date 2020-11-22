@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
-import colors from "../../../utils/ColorPallet";
+import colors from "../../../../utils/ColorPallet";
 
 export enum EButtonSize {
 	"XS",
@@ -17,6 +17,9 @@ export interface IDefaultButtonProps {
 	textColor?: TColors;
 	borderColor?: TColors;
 	size?: TButtonSize;
+	justifyContent?: string;
+	display?: string;
+	width?: string;
 }
 
 const buttonSizeStyle = (size: string) => {
@@ -50,7 +53,8 @@ const buttonSizeStyle = (size: string) => {
         img {
           width: 80px;
           height: 25px;
-        }
+		}
+
         font-size: 14px;
         padding: 3px 15px;
         box-shadow: 1px 1px 2px #80808040;
@@ -58,7 +62,7 @@ const buttonSizeStyle = (size: string) => {
 	}
 };
 
-const DefaultButtonsStyles = styled.button<
+export const DefaultButton = styled.button<
 	Omit<IDefaultButtonProps, "children">
 >`
 	background: ${(props) =>
@@ -67,13 +71,17 @@ const DefaultButtonsStyles = styled.button<
 		props.textColor ? colors[props.textColor] : colors.white};
 	border-color: ${(props) =>
 		props.borderColor ? colors[props.borderColor] : colors.white};
+	display: ${(props) => (props.display ? props.display : "flex")};
+	justify-content: ${(props) =>
+		props.justifyContent ? props.justifyContent : "center"};
+	width: ${(props) => (props.width ? props.width : "50%")};
 	border-radius: 2px;
 	border-style: solid;
 	box-shadow: 1px 1px 1px #80808040;
 	border-width: 1px;
 	margin: 5px 0px 0px;
 	cursor: pointer;
-	letter-spacing: 2px;
+	letter-spacing: 1px;
 	transition: all 0.1s;
 	:hover {
 		scale: 0.98;
@@ -89,4 +97,4 @@ const DefaultButtonsStyles = styled.button<
 	${(props) => buttonSizeStyle(props.size)}
 `;
 
-export default DefaultButtonsStyles;
+export default DefaultButton;

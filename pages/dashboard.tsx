@@ -3,7 +3,7 @@ import defaultStyles from "../components/HOC/DefaultPageProps";
 import Card from "../components/InventoryUI/Cards";
 import styled from "styled-components";
 import DefaultInput from "../components/Forms/FormElements/DefaultInput";
-import DefaultButton from "../components/Forms/FormElements/DefaultButton";
+import DefaultButton from "../components/Forms/FormElements/Buttons/DefaultButton";
 import { GetServerSideProps, GetStaticProps } from "next";
 import Pagination from "../components/Paginator";
 import Filter from "../components/Filters";
