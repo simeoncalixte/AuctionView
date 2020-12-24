@@ -1,6 +1,6 @@
 import React from "react";
 import defaultStyles from "../components/HOC/DefaultPageProps";
-import DefaultInput from "../components/Forms/FormElements/DefaultInput";
+import DefaultInput from "../components/Forms/FormElements/Inputs/DefaultInput";
 import styled from "styled-components";
 import DefaultButton from "../components/Forms/FormElements/Buttons/DefaultButton";
 

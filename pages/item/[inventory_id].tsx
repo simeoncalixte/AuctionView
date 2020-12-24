@@ -12,7 +12,6 @@ import SalesInfo from "../../components/InventoryUI/InfoDisplay/SaleInfo";
 import InventoryItem from "../../components/InventoryUI/utils/ItemEnum";
 import InfoList from "../../components/InventoryUI/atoms/infoListItem";
 import priceFormat from "../../utils/Price";
-import withAuth0 from "../../components/HOC/AuthContainer";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const HairTagWithCentralText = styled.div`
@@ -333,4 +332,4 @@ export const getServerSideProps: GetServerSideProps = async ({
 	}
 };
 
-export default defaultStyles(withAuth0(HomePage));
+export default defaultStyles(HomePage);

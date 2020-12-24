@@ -1,32 +1,14 @@
 import React from "react";
-import withModal, { ModalContext } from "../../Modal";
+import { ModalContext } from "../../Modal";
 import styled from "styled-components";
 import { Button, InputText } from "../FormElements";
 import HairTag from "../../Paginator/Misc/CentralHairTag";
 import * as utils from "../utils";
 import PasswordValdation from "../molecules/PasswordValidationDisplay";
-import Authentication from "../../../services/Auth0";
-import { TFieldValidation, EPasswordPatternName } from "../module";
+import { TFieldValidation, EPasswordPatternName } from "../module.d";
 import emailPattern from "../../../utils/RegEx/email";
-
-const Form = styled.form`
-	box-shadow: 1px 1px 1px #fff;
-	border: 2px solid #f9f9f97a;
-	width: 100%;
-	min-height: 20px;
-	background: #ffffffe3;
-	margin: 20px;
-	padding: 20px;
-	max-width: 500px;
-	border-radius: 2px;
-	color: #414344;
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr;
-	align-items: end;
-	@media screen and (max-width: 400px) {
-		width: 100%;
-	}
-`;
+import StyledForm from "../FormElements/StyledForms";
+import Authentication from "../../../services/Auth0";
 
 const SubmitSection = styled.section`
 	margin: 25px 0px;
@@ -154,7 +136,7 @@ const SignUpForm = (props) => {
 		utils.checkForErrors(e, errorState, ValidationPattern, formReference);
 
 	return (
-		<Form
+		<StyledForm
 			onSubmit={attemptRegisteration}
 			onChange={errorChecking}
 			onBlurCapture={errorChecking}
@@ -254,7 +236,7 @@ const SignUpForm = (props) => {
 				<Button.FacebookButton text={"Sign up with"} />
 				<Button.GoogleButton text={"Sign up with"} />
 			</SubmitSection>
-		</Form>
+		</StyledForm>
 	);
 };
 

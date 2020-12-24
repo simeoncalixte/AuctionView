@@ -2,8 +2,8 @@ import React, { ReactNode, FunctionComponent } from "react";
 import defaultStyles from "../components/HOC/DefaultPageProps";
 import Card from "../components/InventoryUI/Cards";
 import styled from "styled-components";
-import DefaultInput from "../components/Forms/FormElements/DefaultInput";
-import DefaultButton from "../components/Forms/FormElements/Buttons/DefaultButton";
+import DefaultInput from "../components/Forms/FormElements/Inputs/DefaultInput";
+import * as Button from "../components/Forms/FormElements/Buttons";
 import { GetServerSideProps, GetStaticProps } from "next";
 import Pagination from "../components/Paginator";
 import Filter from "../components/Filters";
@@ -29,7 +29,7 @@ const SearchBar = styled(DefaultInput)`
 	font-weight: 400;
 `;
 
-const SearchButton = styled(DefaultButton)`
+const SearchButton = styled(Button.DefaultButton)`
 	display: inline-block;
 `;
 
@@ -122,6 +122,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 	query,
 }) => {
 	const { page = 1, limit = 100 } = query;
+
 	try {
 		let InventoryList;
 

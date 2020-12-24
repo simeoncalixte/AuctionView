@@ -3,8 +3,10 @@ import withModal, { ModalContext } from "../../Modal";
 import styled from "styled-components";
 import { Button, InputText } from "../FormElements";
 import * as utils from "../utils";
-import { TFieldValidation, TValidationRules } from "../module";
+import { TFieldValidation, TValidationRules } from "../module.d";
 import Auth0 from "../../../services/Auth0";
+import StyledForm from "../FormElements/StyledForms";
+import AuthContext from "../../../Context/Authentication";
 
 const ValidationPattern: TFieldValidation = {
 	username: {
@@ -14,36 +16,6 @@ const ValidationPattern: TFieldValidation = {
 		required: true,
 	},
 };
-
-const Form = styled.form`
-	width: 70%;
-	min-height: 20px;
-	background: black;
-	margin: 20px;
-	width: 100%;
-	min-height: 20px;
-	background: #ffffffe3;
-	margin: 20px;
-	padding: 20px;
-	max-width: 400px;
-	border-radius: 8px;
-	box-shadow: 1px 1px 1px #fff;
-	border: 2px solid #f9f9f97a;
-	min-height: 20px;
-	background: black;
-	margin: 20px;
-	width: 100%;
-	min-height: 20px;
-	background: #ffffffe3;
-	margin: 20px;
-	padding: 20px;
-	max-width: 400px;
-	border-radius: 2px;
-	color: #414344;
-	@media screen and (max-width: 400px) {
-		width: 100%;
-	}
-`;
 
 const SubmitSection = styled.section`
 	display: flex;
@@ -67,6 +39,7 @@ const CloseButton = styled.div`
 
 const LoginForm = (props) => {
 	const modalContext = React.useContext(ModalContext);
+	const authentication = React.useContext(AuthContext);
 	const errorState = React.useState<TFieldValidation>({});
 	const [formErrors, setErrors] = errorState;
 
@@ -78,7 +51,7 @@ const LoginForm = (props) => {
 		e.stopPropagation();
 		console.log(e.target);
 		const values = utils.parseFormValues(e.target) as { username; password };
-		Auth0.login(values, (error) => {
+		authentication.login(values, (error) => {
 			console.log({ error });
 		});
 	};
@@ -86,7 +59,7 @@ const LoginForm = (props) => {
 	const displayChangePasswordForm = () => {};
 
 	return (
-		<Form
+		<StyledForm
 			onSubmit={attemptLogin}
 			onChange={errorChecking}
 			onBlurCapture={errorChecking}
@@ -113,7 +86,7 @@ const LoginForm = (props) => {
 				<Button.GoogleButton text={"Login with"} />
 				<Button.FacebookButton text={"Login with"} />
 			</SubmitSection>
-		</Form>
+		</StyledForm>
 	);
 };
 

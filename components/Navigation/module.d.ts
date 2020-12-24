@@ -1,11 +1,12 @@
 interface ILink {
 	href?: string;
 	isActive?: boolean;
-	children?: any;
-	modal?: React.FunctionComponent;
-	type?: "button" | "link" | "modalButton" | undefined;
-	cb?: (e: MouseEvent<any>) => any;
-	onClick?: function;
+	label?: text;
+	type?: "button" | "link" | "modalButton" | "dropDown" | "custom" | undefined;
+	component?: React.FunctionComponent<ILink>;
+	authState?: boolean;
+	dropDownItems?: ILink[];
+	onClick?: (...args: any) => any;
 }
 
 interface ILinks {

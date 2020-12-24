@@ -3,6 +3,7 @@ import { Button, InputText } from "../FormElements";
 import * as utils from "../utils";
 import { TFieldValidation, TValidationRules } from "../module";
 import Auth0 from "../../../services/Auth0";
+import StyledForm from "../FormElements/StyledForms";
 
 const ValidationPattern: TFieldValidation = {
 	email: {
@@ -27,7 +28,7 @@ const ChangePassword = () => {
 	};
 
 	return (
-		<>
+		<StyledForm onSubmit={changePassword}>
 			<InputText.withLabel
 				label={"Email"}
 				name={"email"}
@@ -35,7 +36,11 @@ const ChangePassword = () => {
 				error={formErrors?.email}
 			/>
 
-			<Button.DefaultButton>What</Button.DefaultButton>
-		</>
+			<Button.DefaultButton type="submit" textColor="copper">
+				Request Password Reset
+			</Button.DefaultButton>
+		</StyledForm>
 	);
 };
+
+export default ChangePassword;

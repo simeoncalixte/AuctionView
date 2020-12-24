@@ -1,8 +1,8 @@
 import React, { InputHTMLAttributes } from "react";
 import styled from "styled-components";
-import ColorPallet from "../../../utils/ColorPallet";
-import addAlpha from "../../../utils/ColorPallet/addAlpha";
-import { TValidationRules } from "../module";
+import ColorPallet from "../../../../utils/ColorPallet";
+import addAlpha from "../../../../utils/ColorPallet/addAlpha";
+import { TValidationRules } from "../../module";
 
 type TLabelPostion = "top" | "side";
 
@@ -113,6 +113,7 @@ export const withLabel = (props: InputWithLabel): JSX.Element => {
 			className={className}
 			gridColumns={props.gridColumns}
 			errorExist={errorExist}
+			labelPosition={props.lablePosition}
 		>
 			{label}
 			{requiredError}
