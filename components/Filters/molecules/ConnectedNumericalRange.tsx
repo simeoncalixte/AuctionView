@@ -1,24 +1,23 @@
 import React from "react";
-import NumericalRange from "../atoms/numericalRange";
-import FilterConext from "../../../Context/FilterContext";
-import { getServerSideProps } from "../../../pages/dashboard";
+import NumericalRange from "../atoms/NumericalRange";
 import FilterContext from "../../../Context/FilterContext";
+import { INumericalRange } from "../module";
 
-interface IProps {
+interface IProps extends INumericalRange {
   title: string;
   filterKey: string;
 }
 
-const FilterSwitch = (props: IProps) => {
+const NumericalRangeContainer = (props: Omit<IProps, "onChangeCallBack">) => {
   const { selectedFilters, setFilters } = React.useContext(FilterContext);
 
-  const callBack = (rangeValue: { min: number; max: number }) => {
+  const callBack = async (rangeValue: { min: number; max: number }) => {
     const newFilters = Object.assign({}, selectedFilters);
     newFilters[props.filterKey] = rangeValue;
     setFilters(newFilters);
   };
 
-  return <NumericalRange title={props.title} onChangeCallBack={callBack} />;
+  return <NumericalRange {...props} onChangeCallBack={callBack} />;
 };
 
-export default FilterSwitch;
+export default NumericalRangeContainer;

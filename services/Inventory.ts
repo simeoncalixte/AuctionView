@@ -8,6 +8,7 @@ export const DevelopmentServer = {
   list: `${developmentDomain}/Inventory`,
   attributes: `${developmentDomain}/Inventory/attributes`,
   item: `${developmentDomain}/Inventory/item`,
+  images: `${developmentDomain}/Inventory/images`,
 };
 
 export default DevelopmentServer;

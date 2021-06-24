@@ -7,7 +7,7 @@ const ActiveStyle = `
     background: white;
 `;
 export const navigationLinkStyles = (isActive: boolean) => `
-    margin: 0px 2px;
+    margin: 0px;
     color: white;
     padding: 5px;
     cursor: pointer;
@@ -19,15 +19,16 @@ export const navigationLinkStyles = (isActive: boolean) => `
         ${ActiveStyle}
     }
 `;
+
 export const AnchorStyles = styled.a<{ isActive: ILink["isActive"] }>`
-  ${(props) => navigationLinkStyles(props.isActive)}
+	${(props) => navigationLinkStyles(props.isActive)}
 `;
 
 export const ButtonStyles = styled.button<{
-  isActive: ILink["isActive"];
+	isActive: ILink["isActive"];
 }>`
-  background: none;
-  border: none;
-  font-size: initial;
-  ${(props) => navigationLinkStyles(props.isActive)}
+	background: none;
+	border: none;
+	font-size: initial;
+	${(props) => navigationLinkStyles(props.isActive)}
 `;

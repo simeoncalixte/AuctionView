@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import ValidationDiv from "../FormElements/ValidationDiv";
+import ValidationDiv from "../misc/ValidationDiv";
 import { TValidationRules } from "../module.d";
 import { EPasswordPatternName } from "../module.d";
 

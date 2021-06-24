@@ -12,7 +12,7 @@ const AnimatedOpenCloseCross = styled.div<{
   isOpen: boolean;
   width: string;
 }>`
-  width: ${(props) => props.width};
+  width: ${(props) => (props.width ? props.width : "24px")};
   .st0 {
     fill: transparent;
   }

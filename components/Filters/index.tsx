@@ -10,10 +10,10 @@ import DriveFilter from "./organisms/drive";
 import EngineFilter from "./organisms/engine";
 import FuelTypeFilter from "./organisms/fueltype";
 import CylinderFilters from "./organisms/cylinders";
-import BinarySwitch from "./atoms/binarySwitch";
+import BinarySwitch from "./atoms/BinarySwitch";
 import SaleStatusFilter from "./organisms/saleStatus";
 import Switch from "./molecules/ConnectedSwitch";
-import NumericalRange from "./atoms/numericalRange";
+import NumericalRange from "./atoms/NumericalRange";
 import ConnectedNumericalRange from "./molecules/ConnectedNumericalRange";
 
 interface IProps {
@@ -29,8 +29,8 @@ const FilterWrapper = styled.div<{ displayMore: boolean }>`
   margin: 10px 5px;
   box-shadow: 0px 10px 8px #5451515c;
   padding-bottom: 50px;
-  padding-left: 5px;
   position: relative;
+
   .secondary {
     display: ${(props) => (props.displayMore ? "auto" : "none")};
   }
@@ -39,7 +39,8 @@ const FilterWrapper = styled.div<{ displayMore: boolean }>`
 
 const FilterInputContainer = styled.section`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  gap: 2px;
 `;
 
 const DisplayMore = styled.div`
@@ -56,9 +57,13 @@ const RangeSectionWrapper = styled.div`
 
 const DropDownSectionWrapper = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
   height: max-content;
+  gap: 5px;
+  flex-basis: 100%;
+  padding: 0px 10px;
+  justify-content: flex-start;
 `;
 
 export default (props: IProps) => {
@@ -68,32 +73,39 @@ export default (props: IProps) => {
   return (
     <FilterWrapper displayMore={expansionState}>
       <FilterInputContainer>
-        <RangeSectionWrapper>
-          <ConnectedNumericalRange title={"Year"} filterKey="year" />
-          <ConnectedNumericalRange title={"Purchase Price"} filterKey="price" />
-          <ConnectedNumericalRange
-            title={"Odometer Range"}
-            filterKey="odometerRange"
-          />
-        </RangeSectionWrapper>
+        <ConnectedNumericalRange
+          title={"Year"}
+          filterKey="year"
+          defaultRange={{ min: 1970, max: 2021 }}
+        />
 
-        <DropDownSectionWrapper>
-          <VendorFilter />
-          <ModelFilter />
-          <DamageFilter />
-          <BodyStyleFilter />
-          <TransmissionFilter />
-          <DriveFilter />
-          <EngineFilter />
-          <FuelTypeFilter />
-          <CylinderFilters />
-          <SaleStatusFilter />
-          <ColorFilter />
-        </DropDownSectionWrapper>
+        <VendorFilter />
+        <ModelFilter />
+        <BodyStyleFilter />
+        <DamageFilter />
+        <ConnectedNumericalRange
+          title={"Purchase Price"}
+          filterKey="price"
+          defaultRange={{ min: 0, max: 60000 }}
+        />
+        <ConnectedNumericalRange
+          title={"Odometer Range"}
+          filterKey="odometerRange"
+          defaultRange={{ min: 0, max: 100000 }}
+        />
+
+        <TransmissionFilter />
+        <DriveFilter />
+        <EngineFilter />
+        <FuelTypeFilter />
+        <CylinderFilters />
+        <SaleStatusFilter />
+        <ColorFilter />
+
         <RangeSectionWrapper>
-          <Switch filterKey={"hasKeys"} title={"Has Key"} />
+          {/* <Switch filterKey={"hasKeys"} title={"Has Key"} />
           <Switch filterKey={"buyNowRequired"} title={"Buy Now"} />
-          <Switch filterKey={"runsAndDrive"} title={"Runs and Drive"} />
+          <Switch filterKey={"runsAndDrive"} title={"Runs and Drive"} /> */}
         </RangeSectionWrapper>
       </FilterInputContainer>
       <DisplayMore onClick={toggleDisplayMore}>more</DisplayMore>

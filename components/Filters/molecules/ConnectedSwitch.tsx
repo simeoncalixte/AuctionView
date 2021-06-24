@@ -1,7 +1,5 @@
 import React from "react";
-import BinarySwitch from "../atoms/binarySwitch";
-import FilterConext from "../../../Context/FilterContext";
-import { getServerSideProps } from "../../../pages/dashboard";
+import BinarySwitch from "../atoms/BinarySwitch";
 import FilterContext from "../../../Context/FilterContext";
 
 interface IProps {

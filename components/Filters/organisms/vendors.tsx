@@ -3,7 +3,7 @@ import FilterListItem from "../atoms/FilterListItem";
 import attributeRequest from "../../../apiRequest/InventoryAttribute";
 import FilterContext from "../../../Context/FilterContext";
 import axios from "axios";
-import FilterDropDown from "../atoms/DropDownWithSearch";
+import FilterDropDown from "../atoms/DropDown";
 import Searchable from "../../HOC/Searchable";
 import AttributeRequest from "../../../apiRequest/InventoryAttribute";
 import modelRequest from "../../../apiRequest/modelRequest";
@@ -13,6 +13,7 @@ interface IFilterAttributes {
   _id: string;
   ["Model Groups"]: string[];
 }
+
 interface IModelAttributes {
   Colors: string[];
   ["Model Detail"]: string[];
@@ -34,7 +35,6 @@ const updateContext = (
   } else {
     //remove selectedFilter;
     delete objectToManage[key][value];
-    delete objectToManage["Models"][value];
   }
   objectSetter(Object.assign({}, objectToManage));
 };
@@ -95,6 +95,8 @@ const VendorFilter = (props) => {
       title={"Makes"}
       dropDownIconWidth={"10px"}
       isSearchable={true}
+      fontSize={"16px"}
+      textColor={"black"}
     >
       {vendorList}
     </FilterDropDown>

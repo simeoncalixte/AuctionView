@@ -3,7 +3,7 @@ import FilterContext from "../../../Context/FilterContext";
 import FilterValueTitle from "../atoms/FilterValueTitle";
 import FilterValueContainer from "../atoms/FilterValueContainer";
 import FilterListItem from "../atoms/FilterListItem";
-import FilterDropDown from "../atoms/DropDownWithSearch";
+import FilterDropDown from "../atoms/DropDown";
 import modelRequest from "../../../apiRequest/modelRequest";
 
 interface IModelAttributes {
@@ -47,6 +47,7 @@ const updateModelState = (
 
 const ModelFilters = (props) => {
   const { selectedFilters, setFilters } = React.useContext(FilterContext);
+  const { vendor } = selectedFilters;
   const [modelsLookUp, updateModels] = React.useState({});
   const [Queue, updateQueue] = React.useState([]);
   const [modelJSX, updateModelJSX] = React.useState([]);
@@ -59,6 +60,7 @@ const ModelFilters = (props) => {
     if (vendorObject) {
       const selectedVendorsList = Object.keys(vendorObject);
       const list = selectedVendorsList?.map((item) => item);
+      console.debug(list);
       updateQueue(list);
     }
   };
@@ -157,12 +159,13 @@ const ModelFilters = (props) => {
   React.useEffect(updateModelQue, [selectedFilters]);
   React.useEffect(fetchModels, [Queue]);
   React.useEffect(generateModelsJSX, [modelsLookUp]);
-
   return (
     <FilterDropDown
       isActive={ModelGroupIsActive}
       title={"Models"}
       dropDownIconWidth={"10px"}
+      textColor={"black"}
+      fontSize={"12px"}
     >
       {modelJSX}
     </FilterDropDown>

@@ -18,7 +18,7 @@ export const ModalContext = React.createContext<IModalContext>({});
 const ModalProvider = ModalContext.Provider;
 
 const ModalControllerWrapper = (
-	ComponentTriggingModal: React.FunctionComponent,
+	ComponentTriggingModal: React.FunctionComponent<ILink>,
 	ModalStructure: React.FunctionComponent
 ): React.FunctionComponent => {
 	const [ModalIsOpen, setOpenState] = React.useState(false);
@@ -40,7 +40,6 @@ const ModalControllerWrapper = (
 						</ModalWrapper>
 					</ModalProvider>
 				)}
-
 				<ComponentTriggingModal {...passingProperty} />
 			</>
 		);

@@ -12,20 +12,32 @@ const InventoryItem = styled.div`
   margin: 4px;
   background-color: #ffffffd6;
   border-radius: 2px;
-  flex-basis: 19%;
+  flex-basis: 24%;
+  @media only screen and (max-width: 600px) {
+    flex-basis: 100%;
+  }
   max-height: 232px;
   overflow: hidden;
   position: relative;
 `;
 
-const Image = styled.img<{ blur?: boolean }>`
+const Image = styled.img<{ imageLoaded?: boolean }>`
   width: 100%;
-  filter: ${(props) => (props.blur ? "blur(8px)" : 0)};
+  filter: ${(props) => (props.imageLoaded ? "blur(8px)" : 0)};
 `;
+
+const ImageThumbnail = styled(Image)``;
 
 const CardHeading = styled.span`
   display: block;
+  position: absolute;
   padding: 3px 5px;
+  z-index: 1;
+  background: #fffdfd30;
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `;
 
 const InfoContainer = styled.div`
@@ -95,23 +107,16 @@ const CountDown = (endDate: Date) => {
 
 export default (item) => {
   const [imageLoaded, setLoadedState] = React.useState(false);
-  const [images, setImages] = React.useState(null);
   const [displayInfo, setDisplayInfo] = React.useState(false);
-  const DisplayImage = imageLoaded ? (
-    <Carousel>
-      {images.standard.map((imageSrc, key) => {
-        return <Image key={key} src={imageSrc} />;
-      })}
-    </Carousel>
-  ) : (
-    <Image blur={true} src={`//${item["Image Thumbnail"]}`} />
-  );
+  const [images, setImages] = React.useState(null);
 
-  const PendingEffect = () => {
+  const pendingEffect = () => {
     if (!imageLoaded) {
       if (item["Image URL"]) {
-        getData("//" + Inventory.images, { url: item["Image URL"] })
+        console.log(Inventory.images);
+        getData(Inventory.images, { url: item["Image URL"] })
           .then((res) => {
+            console.log(res);
             const returnedLinks = {
               standard: [],
               thumbNail: [],
@@ -119,15 +124,15 @@ export default (item) => {
             };
 
             res.lotImages.map((imageSet) => {
-              imageSet.link.forEach((links, index) => {
-                if (!links.isThumbNail && !links.isHdImage) {
-                  returnedLinks.standard.push(links.url);
+              imageSet.link.forEach((image, index) => {
+                if (!image.isThumbNail && !image.isHdImage) {
+                  returnedLinks.standard.push(image.url);
                 }
-                if (links.isThumbNail && !links.isHdImage) {
-                  returnedLinks.thumbNail.push(links.url);
+                if (image.isThumbNail && !image.isHdImage) {
+                  returnedLinks.thumbNail.push(image.url);
                 }
-                if (!links.isThumbNail && links.isHdImage) {
-                  returnedLinks.HDImages.push(links.url);
+                if (!image.isThumbNail && image.isHdImage) {
+                  returnedLinks.HDImages.push(image.url);
                 }
               });
             });
@@ -138,6 +143,19 @@ export default (item) => {
       }
     }
   };
+  const DisplayImage = imageLoaded ? (
+    <Carousel>
+      {images?.standard.map((imageSrc, key) => {
+        return <Image imageLoaded={imageLoaded} key={key} src={imageSrc} />;
+      })}
+    </Carousel>
+  ) : (
+    <Image
+      imageLoaded={imageLoaded}
+      onLoad={pendingEffect}
+      src={`//${item["Image Thumbnail"]}`}
+    />
+  );
 
   return (
     <InventoryItem>

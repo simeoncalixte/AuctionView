@@ -1,4 +1,4 @@
-import { IValidationMethods } from "../module";
+import { IValidationMethods } from "../module.d";
 
 const ValidationMethods: IValidationMethods = {
 	required: (value) => !!value,
