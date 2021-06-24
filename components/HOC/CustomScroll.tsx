@@ -53,7 +53,7 @@ const withScrollBar = (WrappedComponent: React.FunctionComponent) => {
   const minimumScrollHeight = 20;
 
   return (props) => {
-    const [customScrollHeight, setCustomScrollHeight] = React.useState(0);
+    let customScrollHeight = React.useRef(0);
     const [customScrollPosition, setCustomScrollPosition] = React.useState(0);
     const [isDraggingThumbTrack, setThumbTrackDragging] = React.useState(false);
     const ScrollBodyReference = React.useRef(null);
@@ -145,10 +145,27 @@ const withScrollBar = (WrappedComponent: React.FunctionComponent) => {
           scrollTop,
           clientHeight,
         } = ScrollBodyReference.current;
-        setCustomScrollHeight(Math.ceil(100 * (clientHeight / scrollHeight)));
+        //
+        console.log({ set: Math.ceil(100 * (clientHeight / scrollHeight)) });
+        customScrollHeight.current = Math.ceil(
+          100 * (clientHeight / scrollHeight)
+        );
       }
     });
-
+    const track = !(customScrollHeight.current >= 100) ? (
+      <Track
+        ref={CustomScrollTrackReference}
+        onMouseUp={MouseBodyClicked}
+        trackBackground={props.trackBackground}
+      >
+        <ThumbTrack
+          ref={ThumbTrackReference}
+          calculatedHeight={customScrollHeight.current}
+          position={customScrollPosition}
+          onMouseDown={toggleDragOnThumbTrack}
+        />
+      </Track>
+    ) : null;
     return (
       <ScrollBody onScrollCapture={balanceScroll}>
         <WrappedComponent
@@ -158,18 +175,7 @@ const withScrollBar = (WrappedComponent: React.FunctionComponent) => {
         >
           {props.children}
         </WrappedComponent>
-        <Track
-          ref={CustomScrollTrackReference}
-          onMouseUp={MouseBodyClicked}
-          trackBackground={props.trackBackground}
-        >
-          <ThumbTrack
-            ref={ThumbTrackReference}
-            calculatedHeight={customScrollHeight}
-            position={customScrollPosition}
-            onMouseDown={toggleDragOnThumbTrack}
-          />
-        </Track>
+        {track}
       </ScrollBody>
     );
   };

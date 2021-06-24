@@ -80,6 +80,10 @@ const arrayOfType = [
     key: /Engine(s)*/gi,
     value: "Engine",
   },
+  {
+    key: /limit/gi,
+    value: (value) => value,
+  },
 ];
 
 arrayOfType.forEach((collection) => {

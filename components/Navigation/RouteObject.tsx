@@ -16,14 +16,14 @@ const Links: ILink[] = [
 		label: "Home",
 	},
 	{
-		href: "/Dashboard",
+		href: "/dashboard",
 		label: "Auction Dashboard",
 	},
 	{
-		href: "/login",
-		type: "modalButton",
+		href: "/Auth/Login",
+		// type: "modalButton",
 		label: "Login",
-		component: Login,
+		// component: Login,
 		authState: false,
 	},
 	{
@@ -60,9 +60,10 @@ const Links: ILink[] = [
 		authState: true,
 	},
 	{
-		type: "modalButton",
+		href: "/Auth/Signup",
+		// type: "modalButton",
 		label: "Register",
-		component: SignUp,
+		// component: SignUp,
 		authState: false,
 	},
 ];

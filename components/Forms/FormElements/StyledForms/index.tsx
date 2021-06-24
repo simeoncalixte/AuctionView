@@ -4,6 +4,7 @@ const Form = styled.form`
 	box-shadow: 1px 1px 1px #fff;
 	border: 2px solid #f9f9f97a;
 	background: #ffffffe3;
+	min-width: 250px;
 	margin: 20px;
 	padding: 20px;
 	border-radius: 2px;

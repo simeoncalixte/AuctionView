@@ -2,7 +2,12 @@ import App from "next/app";
 import withAuthProvider from "../components/HOC/AuthProvider";
 
 function MyApp({ Component, pageProps }) {
-	return <Component {...pageProps} />;
+  return (
+    <>
+      <Component {...pageProps} />
+      <div id="modalContainer"></div>
+    </>
+  );
 }
 
 // Only uncomment this method if you have blocking data requirements for
@@ -10,8 +15,8 @@ function MyApp({ Component, pageProps }) {
 // perform automatic static optimization, causing every page in your app to
 // be server-side rendered.
 MyApp.getInitialProps = async (appContext) => {
-	/// calls page's `getInitialProps` and fills `appProps.pageProps`
-	const appProps = await App.getInitialProps(appContext);
-	return { ...appProps };
+  /// calls page's `getInitialProps` and fills `appProps.pageProps`
+  const appProps = await App.getInitialProps(appContext);
+  return { ...appProps };
 };
 export default withAuthProvider(MyApp);

@@ -3,7 +3,7 @@ import FilterContext from "../../../Context/FilterContext";
 import FilterValueTitle from "../atoms/FilterValueTitle";
 import FilterValueContainer from "../atoms/FilterValueContainer";
 import FilterListItem from "../atoms/FilterListItem";
-import FilterDropDown from "../atoms/DropDownWithSearch";
+import FilterDropDown from "../atoms/DropDown";
 import attributeRequest from "../../../apiRequest/InventoryAttribute";
 
 const updateContext = (
@@ -58,6 +58,8 @@ const DamageFilters = (props) => {
       title={"Damages"}
       dropDownIconWidth={"10px"}
       isSearchable={true}
+      textColor={"black"}
+      fontSize={"16px"}
     >
       {damages}
     </FilterDropDown>

@@ -35,9 +35,8 @@ export default class MyDocument extends Document {
       <html>
         <Head />
         <body>
-          <Main />
+          <Main></Main>
           {/* Here we will mount our modal portal */}
-          <div id="modalContainer" />
           <NextScript />
         </body>
       </html>

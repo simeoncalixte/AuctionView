@@ -42,6 +42,7 @@ interface ICarouselProps extends Omit<ICarousel, "activeIndex"> {
   autoRun?: number;
   width: string;
 }
+
 const CarouselContainer = (props: ICarouselProps) => {
   const [activeIndex, setIndex] = React.useState(0);
   const [indexUpdatesIsLocked, setIndexLockState] = React.useState(false);

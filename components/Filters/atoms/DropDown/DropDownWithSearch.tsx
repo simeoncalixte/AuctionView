@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import withScrollBar from "../../HOC/CustomScroll";
-import Searchable from "../../HOC/Searchable";
-import OpenAndCloseCross from "../../SVG/openCloseCross";
-import Search from "./Search";
-import Title from "./Title";
+import withScrollBar from "../../../HOC/CustomScroll";
+import Searchable from "../../../HOC/Searchable";
+import OpenAndCloseCross from "../../../SVG/openCloseCross";
+import Search from "../Search";
+import Title from "../Title";
 
 const FilterValueContainer = styled.ul`
   height: 250px;

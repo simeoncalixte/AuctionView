@@ -4,7 +4,7 @@ import FilterContext from "../../../Context/FilterContext";
 import FilterValueTitle from "../atoms/FilterValueTitle";
 import FilterValueContainer from "../atoms/FilterValueContainer";
 import FilterListItem from "../atoms/FilterListItem";
-import FilterDropDown from "../atoms/DropDownWithSearch";
+import FilterDropDown from "../atoms/DropDown";
 import attributeRequest from "../../../apiRequest/InventoryAttribute";
 
 const updateContext = (
@@ -60,6 +60,8 @@ const cylindersFilters = (props) => {
       dropDownIconWidth={"10px"}
       isSearchable={true}
       className={"secondary"}
+      fontSize={"16px"}
+      textColor={"black"}
     >
       {cylinderss}
     </FilterDropDown>

@@ -9,12 +9,15 @@ interface IAttributes {
 
 const CardIcon = styled.img<{ width?: string }>`
   width: ${(props) => (props.width ? props.width : "25px")};
-  margin: 2px;
+  margin: 0px 5px;
   position: absolute;
   bottom: 0px;
   z-index: 1;
   left: 50px;
   opacity: 0.6;
+  &.key {
+    transform: rotateZ(60deg);
+  }
 `;
 
 const RunIcon = styled(CardIcon)`
@@ -26,8 +29,9 @@ const KeyExemptIcon = () => <></>;
 
 const HasKeys = (props) => {
   const { hasKeys } = props;
-  if (hasKeys === "YES") return <CardIcon src={"./images/key.svg"} />;
-  if (hasKeys === "EXM") return <>EXM</>;
+  if (hasKeys === "YES")
+    return <CardIcon className={"key"} src={"./images/key.svg"} />;
+  if (hasKeys === "EXM") return <></>;
   if (hasKeys === "NO") return <></>;
   return <></>;
 };

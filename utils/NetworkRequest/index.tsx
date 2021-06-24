@@ -19,5 +19,6 @@ export async function getData(url = "", params = {}) {
     },
     params,
   });
+
   return response.data;
 }

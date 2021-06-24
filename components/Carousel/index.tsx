@@ -54,7 +54,7 @@ export default (props) => {
     return <Image src={`${src}`} />;
   });
 
-  const hdImages = props?.imageCollection?.images?.hdImages?.map((src) => {
+  const hdImages = props?.imageCollection?.images?.HDImages?.map((src) => {
     return <Image src={`${src}`} />;
   });
 
@@ -63,9 +63,7 @@ export default (props) => {
       return <Image src={`${src}`} />;
     }
   );
-
-  console.log({ hdImages });
-
+  console.log(props);
   return (
     <CarouselContainer
       width={"100%"}
@@ -73,8 +71,7 @@ export default (props) => {
       showPreviousNextIndicator={true}
       showIndexIndicators={true}
     >
-      {hdImages}
+      {props.children}
     </CarouselContainer>
   );
-  return null;
 };

@@ -94,6 +94,7 @@ const DropDown = (props: ILink) => {
 		const { offsetWidth: labelWidth } = labelRef.current;
 		caretOffset = labelWidth / 2;
 	}
+	
 	const generatedChildren = props.dropDownItems.map((item) => {
 		return <ListItem>{item.label}</ListItem>;
 	});

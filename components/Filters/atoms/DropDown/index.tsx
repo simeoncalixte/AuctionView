@@ -1,17 +1,18 @@
 import React from "react";
 import styled from "styled-components";
-import withScrollBar from "../../HOC/CustomScroll";
-import Searchable from "../../HOC/Searchable";
-import OpenAndCloseCross from "../../SVG/openCloseCross";
+import withScrollBar from "../../../HOC/CustomScroll";
+import Searchable from "../../../HOC/Searchable";
+import OpenAndCloseCross from "../../../SVG/openCloseCross";
 
 const FilterValueContainer = styled.ul`
-  height: 250px;
-  max-height: 250px;
   transition: height 1s linear;
-  flex-basis: 100%;
   list-style: none;
   padding: 0px;
   margin: 0px;
+  width: 100%;
+  background: white;
+  padding: 5px;
+  box-sizing: border-box;
 `;
 
 const FilterLi = styled.li`
@@ -33,46 +34,45 @@ const FilterValueContainerWithScroll = withScrollBar(FilterValueContainer);
 
 const FilterContainer = styled.section<{ isActive: boolean }>`
   position: relative;
-  max-width: 200px;
-  margin: 0px 5px;
-
-  ${(props) =>
-    props.isActive
-      ? `
-        color: red;
-        h5{
-            color:purple;
-        }
-    `
-      : ``}
 `;
 const FilterTitle = styled.h5`
-  background: linear-gradient(180deg, #f0f0f02b, #00000073, #6e6e6e);
+  background: white;
   font-size: 14px;
   margin: 0px 5px;
   padding: 0px 5px;
   margin: 0px;
-  color: #c7c7c747;
+  color: black;
   font-weight: 500;
   display: flex;
   justify-content: space-between;
-  border-radius: 10px;
+  align-items: center;
+  border-radius: 3px;
+  cursor: pointer;
 `;
 const FilterValueTitle = styled.h6`
   font-size: 18px;
   margin: 0px 5px;
 `;
 
-const DropDownController = styled.div<{ isOpen: boolean }>`
-  height: 0px;
+const DropDownController = styled.div<{ minWidth?: number }>`
   overflow: hidden;
-  ${(props) => (props.isOpen ? "height: auto;" : "")}
+  height: auto;
+  max-height: 600px;
   transition: all 1s linear;
+  position: absolute;
+  min-width: ${(props) => (props.minWidth ? props.minWidth + "px" : "100%")};
+  z-index: 1000;
+  &[data-is-open="false"] {
+    max-height: 0px;
+  }
 `;
 
 interface IDropDown {
+  className?: string;
   title: string;
   children: JSX.Element | JSX.Element[];
+  textColor: string;
+  fontSize: string;
   dropDownIconWidth: string;
   isSearchable?: boolean;
   isActive?: boolean;
@@ -80,8 +80,16 @@ interface IDropDown {
 
 const DropDown = (props: IDropDown) => {
   const [isOpen, setOpen] = React.useState(false);
-
+  const filterContainerReference = React.useRef<HTMLElement>(null);
+  const headerReference = React.useRef(null);
   const toggleDropDown = () => setOpen(!isOpen);
+  const triggerBlur = (e) => {
+    console.log(e);
+    if (filterContainerReference.current) {
+      if (filterContainerReference.current.contains(e.target)) return;
+    }
+    setOpen(false);
+  };
 
   let FilterContent = (
     <FilterValueContainerWithScroll isOpen={isOpen}>
@@ -95,20 +103,27 @@ const DropDown = (props: IDropDown) => {
     FilterContent
   );
 
+  console.log(headerReference.current);
+  const dropDownMinWidth = headerReference?.current?.offsetWidth;
   return (
-    <FilterContainer isActive={props.isActive}>
+    <FilterContainer
+      className={props.className}
+      tabIndex={-1}
+      isActive={props.isActive}
+      ref={filterContainerReference}
+      onBlur={triggerBlur}
+    >
       <FilterTitle
         onClick={() => (props.isActive === false ? null : toggleDropDown())}
+        ref={headerReference}
       >
         <span>{props.title}</span>
         <span>
           <OpenAndCloseCross isOpen={isOpen} width={props.dropDownIconWidth} />
         </span>
       </FilterTitle>
-      <DropDownController isOpen={isOpen}>
-        <FilterValueContainerWithScroll>
-          {props.children}
-        </FilterValueContainerWithScroll>
+      <DropDownController data-is-open={isOpen} minWidth={dropDownMinWidth}>
+        {FilterContent}
       </DropDownController>
     </FilterContainer>
   );

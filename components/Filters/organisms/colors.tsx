@@ -4,7 +4,7 @@ import FilterContext from "../../../Context/FilterContext";
 import FilterValueTitle from "../atoms/FilterValueTitle";
 import FilterValueContainer from "../atoms/FilterValueContainer";
 import FilterListItem from "../atoms/FilterListItem";
-import FilterDropDown from "../atoms/DropDownWithSearch";
+import FilterDropDown from "../atoms/DropDown";
 import attributeRequest from "../../../apiRequest/InventoryAttribute";
 
 const ColorTitle = styled.div<{ color: string }>`
@@ -74,6 +74,8 @@ const colorFilters = (props) => {
       dropDownIconWidth={"10px"}
       isSearchable={true}
       className={"secondary"}
+      textColor={"black"}
+      fontSize={"16px"}
     >
       {Colors}
     </FilterDropDown>
